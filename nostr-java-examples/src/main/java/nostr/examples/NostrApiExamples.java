@@ -1,34 +1,14 @@
 package nostr.examples;
 
 import lombok.extern.java.Log;
-import nostr.api.NIP01;
-import nostr.api.NIP04;
-import nostr.api.NIP05;
-import nostr.api.NIP08;
-import nostr.api.NIP09;
-import nostr.api.NIP25;
-import nostr.api.NIP28;
-import nostr.api.NIP30;
+import nostr.api.*;
 import nostr.base.ChannelProfile;
 import nostr.base.PublicKey;
 import nostr.base.UserProfile;
 import nostr.event.BaseTag;
 import nostr.event.Kind;
 import nostr.event.Reaction;
-import nostr.event.impl.ChannelCreateEvent;
-import nostr.event.impl.ChannelMessageEvent;
-import nostr.event.impl.DeletionEvent;
-import nostr.event.impl.DirectMessageEvent;
-import nostr.event.impl.EphemeralEvent;
-import nostr.event.impl.Filters;
-import nostr.event.impl.GenericEvent;
-import nostr.event.impl.HideMessageEvent;
-import nostr.event.impl.InternetIdentifierMetadataEvent;
-import nostr.event.impl.MentionsEvent;
-import nostr.event.impl.MetadataEvent;
-import nostr.event.impl.MuteUserEvent;
-import nostr.event.impl.ReactionEvent;
-import nostr.event.impl.TextNoteEvent;
+import nostr.event.impl.*;
 import nostr.event.list.KindList;
 import nostr.event.list.PublicKeyList;
 import nostr.event.tag.EventTag;
@@ -41,10 +21,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -62,8 +39,10 @@ public class NostrApiExamples {
     private static final Identity SENDER = Identity.generateRandomIdentity();
 
     private static final UserProfile PROFILE = new UserProfile(SENDER.getPublicKey(), "Nostr Guy", "guy@nostr-java.io", "It's me!", null);
-	private final static Map<String, String> RELAYS = Map.of("lol", "nos.lol", "damus", "relay.damus.io", "ZBD",
-			"nostr.zebedee.cloud", "taxi", "relay.taxi", "mom", "nostr.mom");
+//	private final static Map<String, String> RELAYS = Map.of("lol", "nos.lol", "damus", "relay.damus.io", "ZBD",
+//			"nostr.zebedee.cloud", "taxi", "relay.taxi", "mom", "nostr.mom");
+
+    private final static Map<String, String> RELAYS = Map.of("test", "ws://localhost:5555");
 
     static {
         final LogManager logManager = LogManager.getLogManager();
@@ -94,16 +73,16 @@ public class NostrApiExamples {
 //	        	} catch(Throwable t) { log.log(Level.SEVERE, t.getMessage(), t); };
 //			});
 
-			executor.submit(() -> {
-	        	try {
-					sendTextNoteEvent();
-	        	} catch(Throwable t) { log.log(Level.SEVERE, t.getMessage(), t); }
-            });
+//			executor.submit(() -> {
+//	        	try {
+//					sendTextNoteEvent();
+//	        	} catch(Throwable t) { log.log(Level.SEVERE, t.getMessage(), t); }
+//            });
 
 //            executor.submit(() -> {
 //		    	try {
 //		            sendEncryptedDirectMessage();
-//		    	} catch(Throwable t) { log.log(Level.SEVERE, t.getMessage(), t); };
+;//		    	} catch(Throwable t) { log.log(Level.SEVERE, t.getMessage(), t); };
 //            });
 
 //            executor.submit(() -> {
@@ -172,6 +151,10 @@ public class NostrApiExamples {
 //            executor.submit(() -> {
 //                muteUser();
 //            });
+
+            executor.submit(()->{
+                createCommunity();
+            });
 
             stop(executor);
 
@@ -315,9 +298,14 @@ public class NostrApiExamples {
             logHeader("createChannel");
 
             var channel = new ChannelProfile("JNostr Channel", "This is a channel to test NIP28 in nostr-java", "https://cdn.pixabay.com/photo/2020/05/19/13/48/cartoon-5190942_960_720.jpg");
+            try{
+                System.out.println(channel.toString());
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
             var nip28 = new NIP28<ChannelCreateEvent>(SENDER);
             nip28.setSender(SENDER);
-            nip28.createChannelCreateEvent(channel).sign().send();
+            nip28.createChannelCreateEvent(channel).sign().send(RELAYS);
             return nip28.getEvent();
         } catch (MalformedURLException | URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -372,6 +360,31 @@ public class NostrApiExamples {
         nip28.createMuteUserEvent(RECIPIENT.getPublicKey(), "Posting dick pics").sign().send();
 
         return nip28.getEvent();
+    }
+
+    private static GenericEvent createCommunity() {
+        logHeader("createCommunity");
+
+        List<GenericTag> genericTags = new ArrayList<>();
+        genericTags.add(GenericTag.create("d", 72, UUID.randomUUID().toString()));
+        genericTags.add(GenericTag.create("name", 72,"Community Name"));
+        genericTags.add(GenericTag.create("description", 72,"Community Description"));
+        genericTags.add(GenericTag.create("image", 72, "https://images.unsplash.com/photo-1462888210965-cdf193fb74de", "16"));
+
+        genericTags.add(GenericTag.create("p", 72, SENDER.getPublicKey().toString(), RELAYS.get("test"), "moderator"));
+
+        genericTags.add(GenericTag.create("relay", 72, RELAYS.get("test"), "author"));
+        genericTags.add(GenericTag.create("relay", 72, RELAYS.get("test"), "requests"));
+        genericTags.add(GenericTag.create("relay", 72, RELAYS.get("test"), "approvals"));
+        genericTags.add(GenericTag.create("relay", 72, RELAYS.get("test")));
+
+
+        List<BaseTag> tags = new ArrayList<>(genericTags);
+        var nip72 = new NIP72<CommunityCreateEvent>(SENDER);
+        nip72.createCommunityCreateEvent(tags).sign().send(RELAYS);
+
+        return nip72.getEvent();
+
     }
 
     private static void logAccountsData() {

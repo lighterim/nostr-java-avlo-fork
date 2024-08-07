@@ -36,10 +36,11 @@ public abstract class Profile {
         this.name = null;
     }
 
-    @JsonValue
+//    @JsonValue
     @Override
     public String toString() {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         try {
             return objectMapper.writeValueAsString(this);
         } catch (JsonProcessingException ex) {

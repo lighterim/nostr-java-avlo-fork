@@ -27,6 +27,8 @@ public enum Kind {
     CHANNEL_MESSAGE(42, "channel_message"),
     HIDE_MESSAGE(43, "hide_message"),
     MUTE_USER(44, "mute_user"),
+    COMMUNITY_CREATE(34550, "community_create"),
+    COMMUNITY_MODERATION(4550, "community_moderation"),
     REPLACEABLE_EVENT(10_000, "replaceable_event"),
     EPHEMEREAL_EVENT(20_000, "ephemereal_event"),
     CLIENT_AUTH(22_242, "authentication_of_clients_to_relays"),

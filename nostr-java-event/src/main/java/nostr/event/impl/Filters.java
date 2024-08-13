@@ -14,6 +14,7 @@ import nostr.base.PublicKey;
 import nostr.base.annotation.Key;
 import nostr.event.Kind;
 import nostr.event.json.deserializer.CustomGenericTagQueryDeserializer;
+import nostr.event.json.deserializer.CustomGenericTagQueryListDeserializer;
 import nostr.event.json.serializer.CustomGenericTagQuerySerializer;
 import nostr.event.json.serializer.CustomIdEventListSerializer;
 
@@ -64,4 +65,9 @@ public class Filters {
     @JsonSerialize(using=CustomGenericTagQuerySerializer.class)
     @JsonDeserialize(using=CustomGenericTagQueryDeserializer.class)
     private GenericTagQuery genericTagQuery;
+
+    @JsonProperty("genericTagQueryList")
+    @JsonSerialize(using=CustomGenericTagQuerySerializer.class)
+    @JsonDeserialize(using= CustomGenericTagQueryListDeserializer.class)
+    private List<GenericTagQuery> genericTagQueryList;
 }

@@ -1,5 +1,6 @@
 package nostr.test.event;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import nostr.base.PublicKey;
 import nostr.event.BaseMessage;
 import nostr.event.BaseTag;
@@ -79,6 +80,26 @@ public class DecodeTest {
 
         }
 
+    }
+
+    @Test
+    public void decodeNIP77() throws JsonProcessingException {
+        String json = "["
+                + "\"EVENT\","
+                + "{"
+                + "\"id\":\"28f2fc030e335d061f0b9d03ce0e2c7d1253e6fadb15d89bd47379a96b2c861a\","
+                + "\"kind\":30077,"
+                + "\"pubkey\":\"2bed79f81439ff794cf5ac5f7bff9121e257f399829e472c7a14d3e86fe76984\","
+                + "\"created_at\":1687765220,"
+                + "\"content\":\"手順書が間違ってたら作業者は無理だな\","
+                + "\"tags\":["
+                + "[\"e\",\"494001ac0c8af2a10f60f23538e5b35d3cdacb8e1cc956fe7a16dfa5cbfc4346\",\"\",\"root\"],"
+                + "[\"p\",\"2bed79f81439ff794cf5ac5f7bff9121e257f399829e472c7a14d3e86fe76984\"]"
+                + "],"
+                + "\"sig\":\"86f25c161fec51b9e441bdb2c09095d5f8b92fdce66cb80d9ef09fad6ce53eaa14c5e16787c42f5404905536e43ebec0e463aee819378a4acbe412c533e60546\""
+                + "}]";
+        BaseMessage message = new BaseMessageDecoder<>().decode(json);
+        System.out.println(message.encode());
     }
 
 }

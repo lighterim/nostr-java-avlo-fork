@@ -14,7 +14,12 @@ import nostr.base.IEncoder;
 import nostr.base.IEvent;
 import nostr.event.BaseEvent;
 import nostr.event.BaseMessage;
+import nostr.event.Kind;
+import nostr.event.NIP77Event;
 import nostr.event.impl.GenericEvent;
+import nostr.event.impl.PostIntentEvent;
+import nostr.event.impl.TakeIntentEvent;
+import nostr.event.impl.TradeMessageEvent;
 import nostr.event.json.codec.BaseEventEncoder;
 
 import java.util.Map;
@@ -72,15 +77,32 @@ public class EventMessage extends BaseMessage {
     public static <T extends BaseMessage> T decode(@NonNull Object[] msgArr, ObjectMapper mapper) {
         var arg = msgArr[1];
         if (msgArr.length == 2 && arg instanceof Map map) {
-            var event = mapper.convertValue(map, new TypeReference<GenericEvent>() {});
-            return (T) new EventMessage(event);
+            return (T) new EventMessage(convertEvent(map, mapper));
         } else if (msgArr.length == 3 && arg instanceof String) {
             var subId = arg.toString();
             if (msgArr[2] instanceof Map map) {
-                var event = mapper.convertValue(map, new TypeReference<GenericEvent>() {});
+//                var event = mapper.convertValue(map, new TypeReference<GenericEvent>() {});
+                var event = convertEvent(map, mapper);
                 return (T) new EventMessage(event, subId);
             }
         }
         throw new AssertionError("Invalid argument: " + arg);
+    }
+
+    private static IEvent  convertEvent(Map map, ObjectMapper mapper) {
+        Kind kind;
+        if(map.get("kind") instanceof  Integer v){
+            kind = Kind.valueOf(v);
+        }
+        else{
+            kind = Kind.TEXT_NOTE;
+        }
+        return switch (kind) {
+            case TAKE_INTENT -> mapper.convertValue(map, TakeIntentEvent.class);
+            case POST_INTENT -> mapper.convertValue(map, PostIntentEvent.class);
+            case TRADE_MESSAGE -> mapper.convertValue(map, TradeMessageEvent.class);
+            default -> mapper.convertValue(map, new TypeReference<GenericEvent>() {
+            });
+        };
     }
 }

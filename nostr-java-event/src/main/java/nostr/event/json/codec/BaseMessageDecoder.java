@@ -2,6 +2,7 @@ package nostr.event.json.codec;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.NamedType;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import nostr.base.IDecoder;

@@ -38,6 +38,7 @@ public class TagDeserializer<T extends BaseTag> extends JsonDeserializer<T> {
                 case "quote" -> QuoteTag.deserialize(node);
                 case "payment" -> PaymentTag.deserialize(node);
                 case "side" -> SideTag.deserialize(node);
+                case "take" -> TakeTag.deserialize(node);
                 case "limit" -> LimitTag.deserialize(node);
                 default -> (T) new GenericTagDecoder<>().decode(node.toString());
             };

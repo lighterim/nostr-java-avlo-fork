@@ -8,6 +8,7 @@ import lombok.*;
 import nostr.base.annotation.Key;
 import nostr.base.annotation.Tag;
 import nostr.event.BaseTag;
+import nostr.event.NIP77Event;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @Builder
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Tag(code = "quote", nip = 77)
+@Tag(code = NIP77Event.QUOTE_TAG_CODE, nip = 77)
 @RequiredArgsConstructor
 @AllArgsConstructor
 @JsonPropertyOrder({"number", "currency", "usd_rate"})

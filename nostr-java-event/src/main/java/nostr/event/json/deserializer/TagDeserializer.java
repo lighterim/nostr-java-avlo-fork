@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import nostr.event.BaseTag;
+import nostr.event.NIP77Event;
 import nostr.event.json.codec.GenericTagDecoder;
 import nostr.event.tag.*;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
 public class TagDeserializer<T extends BaseTag> extends JsonDeserializer<T> {
 
@@ -34,12 +34,13 @@ public class TagDeserializer<T extends BaseTag> extends JsonDeserializer<T> {
                 case "price" -> PriceTag.deserialize(node);
                 case "relays" -> RelaysTag.deserialize(node);
                 case "subject" -> SubjectTag.deserialize(node);
-                case "token" -> TokenTag.deserialize(node);
-                case "quote" -> QuoteTag.deserialize(node);
-                case "payment" -> PaymentTag.deserialize(node);
-                case "side" -> SideTag.deserialize(node);
-                case "take" -> TakeTag.deserialize(node);
-                case "limit" -> LimitTag.deserialize(node);
+                case NIP77Event.TOKEN_TAG_CODE -> TokenTag.deserialize(node);
+                case NIP77Event.QUOTE_TAG_CODE -> QuoteTag.deserialize(node);
+                case NIP77Event.PAYMENT_TAG_CODE -> PaymentTag.deserialize(node);
+                case NIP77Event.MAKE_TAG_CODE -> MakeTag.deserialize(node);
+                case NIP77Event.TAKE_TAG_CODE -> TakeTag.deserialize(node);
+                case NIP77Event.LIMIT_TAG_CODE -> LimitTag.deserialize(node);
+                case NIP77Event.CREATED_BY_TAG_CODE -> CreatedByTag.deserialize(node);
                 default -> (T) new GenericTagDecoder<>().decode(node.toString());
             };
         }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import nostr.base.annotation.Tag;
 import nostr.event.BaseTag;
+import nostr.event.NIP77Event;
 import nostr.event.json.serializer.PaymentTagSerializer;
 import nostr.event.json.serializer.TokenTagSerializer;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 @Builder
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Tag(code = "payment", nip=77)
+@Tag(code = NIP77Event.PAYMENT_TAG_CODE, nip=77)
 @RequiredArgsConstructor
 @JsonSerialize(using = PaymentTagSerializer.class)
 public class PaymentTag extends BaseTag {

@@ -60,4 +60,5 @@ public enum Kind {
     public String toString() {
         return Integer.toString(value);
     }
+
 }

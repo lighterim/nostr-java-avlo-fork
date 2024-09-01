@@ -12,4 +12,9 @@ public enum Side {
     Side(String side){
         this.side = side;
     }
+
+    public static Side reverse(Side s){
+        return (s == BUY) ? SELL : BUY;
+    }
+
 }

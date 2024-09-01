@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import nostr.base.annotation.Tag;
 import nostr.event.BaseTag;
+import nostr.event.NIP77Event;
 import nostr.event.json.serializer.LimitTagSerializer;
 import nostr.event.json.serializer.TokenTagSerializer;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 @Builder
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Tag(code = "limit", nip=77)
+@Tag(code = NIP77Event.LIMIT_TAG_CODE, nip=77)
 @RequiredArgsConstructor
 @JsonSerialize(using = LimitTagSerializer.class)
 public class LimitTag extends BaseTag {

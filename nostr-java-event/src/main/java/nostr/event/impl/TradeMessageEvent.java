@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Event(name="trade_message", nip=77)
+@Event(name=NIP77Event.TRADE_MESSAGE_EVENT, nip=77)
 public class TradeMessageEvent extends NIP77Event {
 
     public TradeMessageEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){

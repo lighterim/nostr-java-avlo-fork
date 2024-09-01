@@ -15,7 +15,6 @@ import nostr.base.IEvent;
 import nostr.event.BaseEvent;
 import nostr.event.BaseMessage;
 import nostr.event.Kind;
-import nostr.event.NIP77Event;
 import nostr.event.impl.GenericEvent;
 import nostr.event.impl.PostIntentEvent;
 import nostr.event.impl.TakeIntentEvent;
@@ -90,13 +89,18 @@ public class EventMessage extends BaseMessage {
     }
 
     private static IEvent  convertEvent(Map map, ObjectMapper mapper) {
-        Kind kind;
-        if(map.get("kind") instanceof  Integer v){
-            kind = Kind.valueOf(v);
+        Kind kind = Kind.TEXT_NOTE;
+        Object kindObj = map.get("kind");
+        try{
+            kind = Kind.valueOf((Integer) kindObj);
+        }catch(Exception ignored){
         }
-        else{
-            kind = Kind.TEXT_NOTE;
-        }
+//        if(map.get("kind") instanceof  Integer v){
+//            kind = Kind.valueOf(v);
+//        }
+//        else{
+//            kind = Kind.TEXT_NOTE;
+//        }
         return switch (kind) {
             case TAKE_INTENT -> mapper.convertValue(map, TakeIntentEvent.class);
             case POST_INTENT -> mapper.convertValue(map, PostIntentEvent.class);

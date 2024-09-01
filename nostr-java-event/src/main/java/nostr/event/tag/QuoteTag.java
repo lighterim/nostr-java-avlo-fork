@@ -42,8 +42,10 @@ public class QuoteTag extends BaseTag {
     final String currency = Optional.ofNullable(node.get(2)).orElseThrow().asText();
 
     QuoteTag tag = QuoteTag.builder().number(number).currency(currency).build();
-    String usdRateStr = Optional.ofNullable(node.get(3)).orElseThrow().asText();
-    tag.setUsdRate(new BigDecimal(usdRateStr));
+    if(Optional.ofNullable(node.get(3)).isPresent()) {
+      String usdRateStr = Optional.ofNullable(node.get(3)).orElseThrow().asText();
+      tag.setUsdRate(new BigDecimal(usdRateStr));
+    }
 
     return (T) tag;
   }

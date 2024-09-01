@@ -94,6 +94,9 @@ public class EventMessage extends BaseMessage {
         if(map.get("kind") instanceof  Integer v){
             kind = Kind.valueOf(v);
         }
+        else if(map.get("kind") instanceof String str) {
+            kind = Kind.valueOf(Integer.parseInt(str));
+        }
         else{
             kind = Kind.TEXT_NOTE;
         }

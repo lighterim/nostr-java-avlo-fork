@@ -15,7 +15,6 @@ import nostr.base.IEvent;
 import nostr.event.BaseEvent;
 import nostr.event.BaseMessage;
 import nostr.event.Kind;
-import nostr.event.NIP77Event;
 import nostr.event.impl.GenericEvent;
 import nostr.event.impl.PostIntentEvent;
 import nostr.event.impl.TakeIntentEvent;
@@ -100,6 +99,7 @@ public class EventMessage extends BaseMessage {
         else{
             kind = Kind.TEXT_NOTE;
         }
+
         return switch (kind) {
             case TAKE_INTENT -> mapper.convertValue(map, TakeIntentEvent.class);
             case POST_INTENT -> mapper.convertValue(map, PostIntentEvent.class);

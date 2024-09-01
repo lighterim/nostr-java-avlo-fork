@@ -32,10 +32,28 @@ public class TakeIntentEvent extends NIP77Event {
 
     public TakeIntentEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){
         super(pubKey, Kind.TAKE_INTENT, tags, content);
-        takeTag = findTag(TakeTag.class, TAKE_TAG_CODE);
-        tokenTag = findTag(TokenTag.class, TOKEN_TAG_CODE);
-        quoteTag = findTag(QuoteTag.class, QUOTE_TAG_CODE);
-        paymentTag = findTag(PaymentTag.class, PAYMENT_TAG_CODE);
+        initTags();
+    }
+
+    private void initTags() {
+        if(takeTag == null) {
+            takeTag = findTag(TakeTag.class, TAKE_TAG_CODE);
+        }
+        if(tokenTag == null) {
+            tokenTag = findTag(TokenTag.class, TOKEN_TAG_CODE);
+        }
+        if(quoteTag == null) {
+            quoteTag = findTag(QuoteTag.class, QUOTE_TAG_CODE);
+        }
+        if(paymentTag == null) {
+            paymentTag = findTag(PaymentTag.class, PAYMENT_TAG_CODE);
+        }
+    }
+
+    @Override
+    public void setTags(List<BaseTag> tags) {
+        super.setTags(tags);
+        initTags();
     }
 
     @Override

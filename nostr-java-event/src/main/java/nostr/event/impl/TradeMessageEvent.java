@@ -23,7 +23,19 @@ public class TradeMessageEvent extends NIP77Event {
     private CreatedByTag createdByTag;
     public TradeMessageEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){
         super(pubKey, Kind.TRADE_MESSAGE, tags, content);
-        this.createdByTag = findTag(CreatedByTag.class, CREATED_BY_TAG_CODE);
+        initTags();
+    }
+
+    private void initTags() {
+        if(createdByTag == null) {
+            this.createdByTag = findTag(CreatedByTag.class, CREATED_BY_TAG_CODE);
+        }
+    }
+
+    @Override
+    public void setTags(List<BaseTag> tags) {
+        super.setTags(tags);
+        initTags();
     }
 
     @Override

@@ -29,10 +29,28 @@ public class PostIntentEvent extends NIP77Event {
 
     public PostIntentEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){
         super(pubKey, Kind.POST_INTENT, tags, content);
-        this.quoteTag = findTag(QuoteTag.class, QUOTE_TAG_CODE);
-        this.tokenTag = findTag(TokenTag.class, TOKEN_TAG_CODE);
-        this.sideTag = findTag(MakeTag.class, MAKE_TAG_CODE);
-        this.limitTag = findTag(LimitTag.class, LIMIT_TAG_CODE);
+        initTags();
+    }
+
+    private void initTags() {
+        if(quoteTag == null) {
+            this.quoteTag = findTag(QuoteTag.class, QUOTE_TAG_CODE);
+        }
+        if(tokenTag == null) {
+            this.tokenTag = findTag(TokenTag.class, TOKEN_TAG_CODE);
+        }
+        if(sideTag == null) {
+            this.sideTag = findTag(MakeTag.class, MAKE_TAG_CODE);
+        }
+        if(limitTag == null) {
+            this.limitTag = findTag(LimitTag.class, LIMIT_TAG_CODE);
+        }
+    }
+
+    @Override
+    public void setTags(List<BaseTag> tags) {
+        super.setTags(tags);
+        initTags();
     }
 
     @Override

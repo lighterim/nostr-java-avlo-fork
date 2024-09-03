@@ -1,5 +1,6 @@
 package nostr.event.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -9,10 +10,7 @@ import nostr.base.annotation.Event;
 import nostr.event.BaseTag;
 import nostr.event.Kind;
 import nostr.event.NIP77Event;
-import nostr.event.tag.LimitTag;
-import nostr.event.tag.QuoteTag;
-import nostr.event.tag.MakeTag;
-import nostr.event.tag.TokenTag;
+import nostr.event.tag.*;
 
 import java.util.List;
 
@@ -22,10 +20,16 @@ import java.util.List;
 @Event(name=NIP77Event.POST_INTENT_EVENT, nip=77)
 public class PostIntentEvent extends NIP77Event {
 
+    @JsonIgnore
     private TokenTag tokenTag;
+    @JsonIgnore
     private QuoteTag quoteTag;
+    @JsonIgnore
     private MakeTag sideTag;
+    @JsonIgnore
     private LimitTag limitTag;
+    @JsonIgnore
+    private List<PaymentTag> paymentTags;
 
     public PostIntentEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){
         super(pubKey, Kind.POST_INTENT, tags, content);
@@ -45,6 +49,9 @@ public class PostIntentEvent extends NIP77Event {
         if(limitTag == null) {
             this.limitTag = findTag(LimitTag.class, LIMIT_TAG_CODE);
         }
+        if(paymentTags == null){
+            this.paymentTags = findTags(PaymentTag.class, PAYMENT_TAG_CODE);
+        }
     }
 
     @Override
@@ -57,8 +64,9 @@ public class PostIntentEvent extends NIP77Event {
     public void validate() {
         super.validate();
         if(tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
-                || sideTag == null || sideTag.getSide()==null){
-            throw new AssertionError("tokenTag, sideTag, quoteTag must not be empty!");
+                || sideTag == null || sideTag.getSide()==null || quoteTag == null || isBlank(quoteTag.getCurrency()) || !gtZero(quoteTag.getNumber())
+                || paymentTags == null || paymentTags.isEmpty() ){
+            throw new AssertionError("tokenTag, sideTag, quoteTag, payment must not be empty!");
         }
     }
 }

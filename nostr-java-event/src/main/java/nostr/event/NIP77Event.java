@@ -4,7 +4,9 @@ import nostr.base.PublicKey;
 import nostr.event.impl.GenericEvent;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NIP77Event extends GenericEvent {
 
@@ -35,12 +37,19 @@ public class NIP77Event extends GenericEvent {
         if(tags == null || tags.isEmpty()){
             return null;
         }
-        for(BaseTag t : tags){
-            if (t.getCode().equals(tagCode) && tagClass.isInstance(t)){
-                return (T)t;
-            }
+        return tags.stream().filter(
+                t -> t.getCode().equals(tagCode) && tagClass.isInstance(t)
+        ).findFirst().map(tagClass::cast).orElse(null);
+    }
+
+    public <T extends BaseTag> List<T> findTags(Class<T> tagClass, String tagCode){
+        List<BaseTag> tags = getTags();
+        if(tags == null || tags.isEmpty()){
+            return new ArrayList<>();
         }
-        return null;
+        return tags.stream().filter(
+                t -> t.getCode().equals(tagCode) && tagClass.isInstance(t)
+        ).map(tagClass::cast).collect(Collectors.toList());
     }
 
     protected static boolean isBlank(String s){

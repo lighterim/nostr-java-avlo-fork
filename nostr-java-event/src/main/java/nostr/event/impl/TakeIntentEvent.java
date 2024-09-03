@@ -1,5 +1,6 @@
 package nostr.event.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,9 +26,13 @@ import static nostr.event.NIP77Event.TAKE_INTENT_EVENT;
 @Event(name=TAKE_INTENT_EVENT, nip=77)
 public class TakeIntentEvent extends NIP77Event {
 
+    @JsonIgnore
     private TakeTag takeTag;
+    @JsonIgnore
     private TokenTag tokenTag;
+    @JsonIgnore
     private QuoteTag quoteTag;
+    @JsonIgnore
     private PaymentTag paymentTag;
 
     public TakeIntentEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){

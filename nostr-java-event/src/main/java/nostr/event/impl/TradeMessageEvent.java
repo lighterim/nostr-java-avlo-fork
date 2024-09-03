@@ -1,5 +1,6 @@
 package nostr.event.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 @Event(name=NIP77Event.TRADE_MESSAGE_EVENT, nip=77)
 public class TradeMessageEvent extends NIP77Event {
 
+    @JsonIgnore
     private CreatedByTag createdByTag;
     public TradeMessageEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){
         super(pubKey, Kind.TRADE_MESSAGE, tags, content);

@@ -57,7 +57,7 @@ public class TakeIntentEvent extends NIP77Event {
     }
 
     @Override
-    protected void validate() {
+    public void validate() {
         super.validate();
         if(
                 takeTag == null || isBlank(takeTag.getIntentEventId()) || !gtZero(takeTag.getVolume())

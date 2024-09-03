@@ -39,7 +39,7 @@ public class TradeMessageEvent extends NIP77Event {
     }
 
     @Override
-    protected void validate() {
+    public void validate() {
         super.validate();
         if(createdByTag != null){
             throw  new AssertionError("createdByTag is null");

@@ -54,7 +54,7 @@ public class PostIntentEvent extends NIP77Event {
     }
 
     @Override
-    protected void validate() {
+    public void validate() {
         super.validate();
         if(tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
                 || sideTag == null || sideTag.getSide()==null){

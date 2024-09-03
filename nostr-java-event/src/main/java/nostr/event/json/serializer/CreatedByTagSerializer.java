@@ -11,6 +11,11 @@ public class CreatedByTagSerializer extends JsonSerializer<CreatedByTag> {
 
     @Override
     public void serialize(CreatedByTag value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-
+        gen.writeStartArray();
+        gen.writeString("create_by");
+        gen.writeString(value.getTakeIntentEventId());
+        gen.writeString(value.getNip05());
+        gen.writeString(value.getPubkey());
+        gen.writeEndArray();
     }
 }

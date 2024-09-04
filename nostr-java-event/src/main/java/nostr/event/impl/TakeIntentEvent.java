@@ -35,8 +35,11 @@ public class TakeIntentEvent extends NIP77Event {
     @JsonIgnore
     private PaymentTag paymentTag;
 
-    public TakeIntentEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){
+    private long tradeId;
+
+    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){
         super(pubKey, Kind.TAKE_INTENT, tags, content);
+        this.tradeId = tradeId;
         initTags();
     }
 

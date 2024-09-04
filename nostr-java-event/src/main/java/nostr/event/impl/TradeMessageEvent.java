@@ -11,6 +11,7 @@ import nostr.event.BaseTag;
 import nostr.event.Kind;
 import nostr.event.NIP77Event;
 import nostr.event.tag.CreatedByTag;
+import nostr.event.tag.LedgerTag;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class TradeMessageEvent extends NIP77Event {
 
     @JsonIgnore
     private CreatedByTag createdByTag;
+    @JsonIgnore
+    private LedgerTag ledgerTag;
     public TradeMessageEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){
         super(pubKey, Kind.TRADE_MESSAGE, tags, content);
         initTags();
@@ -31,6 +34,9 @@ public class TradeMessageEvent extends NIP77Event {
     private void initTags() {
         if(createdByTag == null) {
             this.createdByTag = findTag(CreatedByTag.class, CREATED_BY_TAG_CODE);
+        }
+        if(ledgerTag == null){
+            this.ledgerTag = findTag(LedgerTag.class, LEDGER_TAG_CODE);
         }
     }
 

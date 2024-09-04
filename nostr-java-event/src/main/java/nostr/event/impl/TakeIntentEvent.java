@@ -42,11 +42,12 @@ public class TakeIntentEvent extends NIP77Event {
         initTags();
     }
 
-    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull Integer nip, @NonNull List<BaseTag> tags, @NonNull String eventIdString, String content) {
+    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull Integer nip, @NonNull List<BaseTag> tags, @NonNull String eventIdString, String content, long createdAt) {
         super(pubKey, Kind.TAKE_INTENT, tags, content);
         this.tradeId = tradeId;
         this.setNip(nip);
         this.setId(eventIdString);
+        this.setCreatedAt(createdAt);
         initTags();
     }
 

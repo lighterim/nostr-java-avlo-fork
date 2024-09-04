@@ -15,7 +15,6 @@ import nostr.event.tag.QuoteTag;
 import nostr.event.tag.TakeTag;
 import nostr.event.tag.TokenTag;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static nostr.event.NIP77Event.TAKE_INTENT_EVENT;
@@ -23,7 +22,7 @@ import static nostr.event.NIP77Event.TAKE_INTENT_EVENT;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Event(name=TAKE_INTENT_EVENT, nip=77)
+@Event(name = TAKE_INTENT_EVENT, nip = 77)
 public class TakeIntentEvent extends NIP77Event {
 
     @JsonIgnore
@@ -37,23 +36,31 @@ public class TakeIntentEvent extends NIP77Event {
 
     private long tradeId;
 
-    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){
+    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content) {
         super(pubKey, Kind.TAKE_INTENT, tags, content);
         this.tradeId = tradeId;
         initTags();
     }
 
+    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull Integer nip, @NonNull List<BaseTag> tags, @NonNull String eventIdString, String content) {
+        super(pubKey, Kind.TAKE_INTENT, tags, content);
+        this.tradeId = tradeId;
+        this.setNip(nip);
+        this.setId(eventIdString);
+        initTags();
+    }
+
     private void initTags() {
-        if(takeTag == null) {
+        if (takeTag == null) {
             takeTag = findTag(TakeTag.class, TAKE_TAG_CODE);
         }
-        if(tokenTag == null) {
+        if (tokenTag == null) {
             tokenTag = findTag(TokenTag.class, TOKEN_TAG_CODE);
         }
-        if(quoteTag == null) {
+        if (quoteTag == null) {
             quoteTag = findTag(QuoteTag.class, QUOTE_TAG_CODE);
         }
-        if(paymentTag == null) {
+        if (paymentTag == null) {
             paymentTag = findTag(PaymentTag.class, PAYMENT_TAG_CODE);
         }
     }
@@ -67,9 +74,9 @@ public class TakeIntentEvent extends NIP77Event {
     @Override
     public void validate() {
         super.validate();
-        if(
+        if (
                 takeTag == null || isBlank(takeTag.getIntentEventId()) || !gtZero(takeTag.getVolume())
-                || tokenTag == null || quoteTag == null || paymentTag == null
+                        || tokenTag == null || quoteTag == null || paymentTag == null
         ) {
             throw new AssertionError("take tag incorrect.", null);
         }

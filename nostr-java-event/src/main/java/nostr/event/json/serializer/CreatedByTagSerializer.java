@@ -10,12 +10,13 @@ import java.io.IOException;
 public class CreatedByTagSerializer extends JsonSerializer<CreatedByTag> {
 
     @Override
-    public void serialize(CreatedByTag value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+    public void serialize(CreatedByTag t, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartArray();
-        gen.writeString(value.getCode());
-        gen.writeString(value.getTakeIntentEventId());
-        gen.writeString(value.getNip05());
-        gen.writeString(value.getPubkey());
+        gen.writeString(t.getCode());
+        gen.writeString(t.getTakeIntentEventId());
+        gen.writeString(t.getNip05());
+        gen.writeString(t.getPubkey());
+        gen.writeNumber(t.getTradeId());
         gen.writeEndArray();
     }
 }

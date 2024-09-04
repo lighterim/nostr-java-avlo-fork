@@ -65,7 +65,7 @@ public class PostIntentEvent extends NIP77Event {
         super.validate();
         if(tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
                 || sideTag == null || sideTag.getSide()==null || quoteTag == null || isBlank(quoteTag.getCurrency()) || !gtZero(quoteTag.getNumber())
-                || paymentTags == null || paymentTags.isEmpty() ){
+                || paymentTags == null || paymentTags.isEmpty()){
             throw new AssertionError("tokenTag, sideTag, quoteTag, payment must not be empty!");
         }
     }

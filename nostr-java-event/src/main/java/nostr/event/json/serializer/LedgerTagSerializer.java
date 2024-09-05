@@ -4,18 +4,20 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import nostr.event.tag.CreatedByTag;
+import nostr.event.tag.LedgerTag;
 
 import java.io.IOException;
 
-public class LedgerTagSerializer extends JsonSerializer<CreatedByTag> {
+public class LedgerTagSerializer extends JsonSerializer<LedgerTag> {
 
     @Override
-    public void serialize(CreatedByTag value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+    public void serialize(LedgerTag value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartArray();
         gen.writeString(value.getCode());
-        gen.writeString(value.getTakeIntentEventId());
-        gen.writeString(value.getNip05());
-        gen.writeString(value.getPubkey());
+        gen.writeString(value.getChain());
+        gen.writeString(value.getNetwork());
+        gen.writeString(value.getTxId());
+        gen.writeString(value.getTxUrl());
         gen.writeEndArray();
     }
 }

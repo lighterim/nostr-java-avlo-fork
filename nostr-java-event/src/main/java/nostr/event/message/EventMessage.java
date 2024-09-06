@@ -15,10 +15,7 @@ import nostr.base.IEvent;
 import nostr.event.BaseEvent;
 import nostr.event.BaseMessage;
 import nostr.event.Kind;
-import nostr.event.impl.GenericEvent;
-import nostr.event.impl.PostIntentEvent;
-import nostr.event.impl.TakeIntentEvent;
-import nostr.event.impl.TradeMessageEvent;
+import nostr.event.impl.*;
 import nostr.event.json.codec.BaseEventEncoder;
 
 import java.util.Map;
@@ -104,6 +101,7 @@ public class EventMessage extends BaseMessage {
             case TAKE_INTENT -> mapper.convertValue(map, TakeIntentEvent.class);
             case POST_INTENT -> mapper.convertValue(map, PostIntentEvent.class);
             case TRADE_MESSAGE -> mapper.convertValue(map, TradeMessageEvent.class);
+            case SET_METADATA -> mapper.convertValue(map, InternetIdentifierMetadataEvent.class);
             default -> mapper.convertValue(map, new TypeReference<GenericEvent>() {
             });
         };

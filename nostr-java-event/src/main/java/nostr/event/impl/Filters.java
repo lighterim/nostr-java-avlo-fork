@@ -15,9 +15,12 @@ import nostr.base.annotation.Key;
 import nostr.event.Kind;
 import nostr.event.json.deserializer.CustomGenericTagQueryDeserializer;
 import nostr.event.json.deserializer.CustomGenericTagQueryListDeserializer;
+import nostr.event.json.deserializer.CompositionQueryDeserializer;
+import nostr.event.json.serializer.CompositionQuerySerializer;
 import nostr.event.json.serializer.CustomGenericTagQueryListSerializer;
 import nostr.event.json.serializer.CustomGenericTagQuerySerializer;
 import nostr.event.json.serializer.CustomIdEventListSerializer;
+import nostr.event.query.CompositionQuery;
 
 import java.util.List;
 
@@ -71,4 +74,9 @@ public class Filters {
     @JsonSerialize(using= CustomGenericTagQueryListSerializer.class)
     @JsonDeserialize(using= CustomGenericTagQueryListDeserializer.class)
     private List<GenericTagQuery> genericTagQueryList;
+
+    @JsonProperty("compositionQuery")
+    @JsonSerialize(using= CompositionQuerySerializer.class)
+    @JsonDeserialize(using=CompositionQueryDeserializer.class)
+    private CompositionQuery compositionQuery;
 }

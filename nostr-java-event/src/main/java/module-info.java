@@ -14,6 +14,7 @@ module nostr.event {
     exports nostr.event;
     exports nostr.event.impl;
     exports nostr.event.message;
+    exports nostr.event.query;
     exports nostr.event.json.codec;
     exports nostr.event.json.deserializer;
     exports nostr.event.json.serializer;

@@ -16,12 +16,16 @@ public class CompositionQuery {
 
     private List<GenericTagQuery> anyMatchList;
 
+    private List<GenericTagQuery> allMatchList;
+
     public CompositionQuery(){
         anyMatchList = new ArrayList<>();
+        allMatchList = new ArrayList<>();
     }
 
-    public CompositionQuery(Kind kind, List<GenericTagQuery> anyMatchList){
+    public CompositionQuery(Kind kind, List<GenericTagQuery> anyMatchList, List<GenericTagQuery> allMatchList){
         this.kind = kind;
         this.anyMatchList = anyMatchList;
+        this.allMatchList = allMatchList;
     }
 }

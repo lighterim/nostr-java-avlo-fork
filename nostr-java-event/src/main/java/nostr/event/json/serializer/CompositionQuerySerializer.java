@@ -2,6 +2,7 @@ package nostr.event.json.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -12,6 +13,7 @@ import nostr.event.query.CompositionQuery;
 
 import java.io.IOException;
 import java.io.Serial;
+import java.util.List;
 
 /**
  * @author guilhermegps
@@ -30,18 +32,25 @@ public class CompositionQuerySerializer extends StdSerializer<CompositionQuery> 
         gen.writeStartObject();
         var mapper = IEncoder.MAPPER;
         gen.writeObjectField("kind", mapper.valueToTree(value.getKind()));
-        ArrayNode anyMatchList = (ArrayNode) mapper.valueToTree(value.getAnyMatchList());
-        if(anyMatchList !=null && !anyMatchList.isEmpty()){
-            gen.writeArrayFieldStart("anyMatchList");
-            for(int i=0; i<anyMatchList.size(); i++){
-                JsonNode n = toJson(anyMatchList.get(i));
-                gen.writeStartObject();
-                gen.writeObjectField(n.fieldNames().next(), n.get(n.fieldNames().next()));
-                gen.writeEndObject();
-            }
-            gen.writeEndArray();
-        }
+        writeMatchList(gen, mapper,"anyMatchList", value.getAnyMatchList());
+        writeMatchList(gen, mapper,"allMatchList", value.getAllMatchList());
         gen.writeEndObject();
+    }
+
+    private void writeMatchList(JsonGenerator gen, ObjectMapper mapper, String matchListName, List<GenericTagQuery> matchList) throws IOException {
+        if(matchList != null && !matchList.isEmpty()){
+            ArrayNode list = (ArrayNode) mapper.valueToTree(matchList);
+            if(list !=null && !list.isEmpty()){
+                gen.writeArrayFieldStart(matchListName);
+                for(int i = 0; i< list.size(); i++){
+                    JsonNode n = toJson(list.get(i));
+                    gen.writeStartObject();
+                    gen.writeObjectField(n.fieldNames().next(), n.get(n.fieldNames().next()));
+                    gen.writeEndObject();
+                }
+                gen.writeEndArray();
+            }
+        }
     }
 
     private JsonNode toJson(JsonNode node) {

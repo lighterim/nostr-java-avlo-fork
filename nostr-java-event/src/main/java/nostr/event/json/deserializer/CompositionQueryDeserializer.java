@@ -24,27 +24,31 @@ public class CompositionQueryDeserializer extends JsonDeserializer<CompositionQu
         JsonNode rootNode = jsonParser.getCodec().readTree(jsonParser);
 
         var compositionQuery = new CompositionQuery();
-
         Iterator<Map.Entry<String, JsonNode>> fields = rootNode.fields();
         fields.forEachRemaining(field -> {
-
-            if (field.getKey().equals("kind")) {
-                Kind kind = Kind.valueOf(field.getValue().asInt());
-                compositionQuery.setKind(kind);
-            } else if (field.getKey().equals("anyMatchList")) {
-                ArrayNode any = (ArrayNode) field.getValue();
-                for (int i = 0; i < any.size(); i++) {
-                    GenericTagQuery tagQuery = new GenericTagQuery();
-                    String tagName = any.get(i).fieldNames().next();
-                    JsonNode valuesNode = any.get(i).get(tagName);
-                    List<String> values = objectMapper.convertValue(valuesNode, ArrayList.class);
-                    tagQuery.setTagName(tagName); // Assuming tagName is always a single character preceded by '#'
-                    tagQuery.setValue(values);
-                    compositionQuery.getAnyMatchList().add(tagQuery);
+            switch (field.getKey()) {
+                case "kind" -> {
+                    Kind kind = Kind.valueOf(field.getValue().asInt());
+                    compositionQuery.setKind(kind);
                 }
+                case "anyMatchList" -> setMatchList(field, objectMapper, compositionQuery.getAnyMatchList());
+                case "allMatchList" -> setMatchList(field, objectMapper, compositionQuery.getAllMatchList());
             }
         });
 
         return compositionQuery;
+    }
+
+    private static void setMatchList(Map.Entry<String, JsonNode> field, ObjectMapper objectMapper, List<GenericTagQuery> matchList) {
+        ArrayNode any = (ArrayNode) field.getValue();
+        for (int i = 0; i < any.size(); i++) {
+            GenericTagQuery tagQuery = new GenericTagQuery();
+            String tagName = any.get(i).fieldNames().next();
+            JsonNode valuesNode = any.get(i).get(tagName);
+            List<String> values = objectMapper.convertValue(valuesNode, ArrayList.class);
+            tagQuery.setTagName(tagName); // Assuming tagName is always a single character preceded by '#'
+            tagQuery.setValue(values);
+            matchList.add(tagQuery);
+        }
     }
 }

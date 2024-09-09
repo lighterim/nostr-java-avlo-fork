@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import nostr.api.factory.EventFactory;
 import nostr.event.BaseTag;
 import nostr.event.Kind;
+import nostr.event.TradeStatus;
 import nostr.event.impl.PostIntentEvent;
 import nostr.event.impl.TakeIntentEvent;
 import nostr.event.impl.TradeMessageEvent;
@@ -37,16 +38,18 @@ public class NIP77Impl {
 
         private final Kind kind;
         private final long tradeId;
+        private final TradeStatus tradeStatus;
 
-        public TakeIntentEventFactory(Long tradeId, Identity sender, List<BaseTag> tags, String content){
+        public TakeIntentEventFactory(Long tradeId, Identity sender, List<BaseTag> tags, TradeStatus tradeStatus, String content){
             super(sender, tags, content);
             this.kind = Kind.TAKE_INTENT;
             this.tradeId = tradeId;
+            this.tradeStatus = tradeStatus;
         }
 
         @Override
         public TakeIntentEvent create(){
-            return new TakeIntentEvent(tradeId, getSender(), getTags(), getContent());
+            return new TakeIntentEvent(tradeId, getSender(), getTags(), getContent(), tradeStatus);
         }
     }
 

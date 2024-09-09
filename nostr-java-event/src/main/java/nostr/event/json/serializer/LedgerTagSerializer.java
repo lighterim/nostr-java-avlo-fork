@@ -18,6 +18,7 @@ public class LedgerTagSerializer extends JsonSerializer<LedgerTag> {
         gen.writeString(value.getNetwork());
         gen.writeString(value.getTxId());
         gen.writeString(value.getTxUrl());
+        gen.writeString(value.getTradeStatus().name());
         gen.writeEndArray();
     }
 }

@@ -6,6 +6,7 @@ import lombok.*;
 import nostr.base.annotation.Tag;
 import nostr.event.BaseTag;
 import nostr.event.NIP77Event;
+import nostr.event.TradeStatus;
 import nostr.event.json.serializer.CreatedByTagSerializer;
 import nostr.event.json.serializer.LedgerTagSerializer;
 
@@ -18,11 +19,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @JsonSerialize(using = LedgerTagSerializer.class)
 public class LedgerTag extends BaseTag {
-    /** ["ledger", "$chain","$network","$tx_id", "$tx_url"] **/
+    /** ["ledger", "$chain","$network","$tx_id", "$tx_url", "$trade_status] **/
     private final String chain;
     private final String network;
     private final String txId;
     private final String txUrl;
+    private final TradeStatus tradeStatus;
 
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
@@ -30,9 +32,11 @@ public class LedgerTag extends BaseTag {
         final String network = Optional.ofNullable(node.get(2)).orElseThrow().asText();
         final String txId = Optional.ofNullable(node.get(3)).orElseThrow().asText();
         final String txUrl = Optional.ofNullable(node.get(4)).orElseThrow().asText();
+        final String tradeStatus = Optional.ofNullable(node.get(5)).orElseThrow().asText();
 
         return (T) LedgerTag.builder()
-                .chain(chain).network(network).txId(txId).txUrl(txUrl)
+                .chain(chain).network(network).txId(txId).txUrl(txUrl).tradeStatus(TradeStatus.valueOf(tradeStatus))
                 .build();
     }
+
 }

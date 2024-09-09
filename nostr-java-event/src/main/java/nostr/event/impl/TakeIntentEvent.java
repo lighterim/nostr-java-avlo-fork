@@ -11,6 +11,7 @@ import nostr.base.annotation.Event;
 import nostr.event.BaseTag;
 import nostr.event.Kind;
 import nostr.event.NIP77Event;
+import nostr.event.TradeStatus;
 import nostr.event.tag.PaymentTag;
 import nostr.event.tag.QuoteTag;
 import nostr.event.tag.TakeTag;
@@ -38,15 +39,24 @@ public class TakeIntentEvent extends NIP77Event {
     @JsonProperty("trade_id")
     private long tradeId;
 
-    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content) {
+    @JsonProperty("status")
+    private String tradeStatus;
+
+    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content, TradeStatus tradeStatus) {
         super(pubKey, Kind.TAKE_INTENT, tags, content);
         this.tradeId = tradeId;
+        if(tradeStatus!=null) {
+            this.tradeStatus = tradeStatus.getValue();
+        }
         initTags();
     }
 
-    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull Integer nip, @NonNull List<BaseTag> tags, @NonNull String eventIdString, String content, long createdAt) {
+    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull Integer nip, @NonNull List<BaseTag> tags, @NonNull String eventIdString, @NonNull String content, TradeStatus tradeStatus, long createdAt) {
         super(pubKey, Kind.TAKE_INTENT, tags, content);
         this.tradeId = tradeId;
+        if(tradeStatus!=null) {
+            this.tradeStatus = tradeStatus.getValue();
+        }
         this.setNip(nip);
         this.setId(eventIdString);
         this.setCreatedAt(createdAt);

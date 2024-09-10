@@ -156,6 +156,14 @@ public class Point {
         return NostrUtil.bytesFromBigInteger(P.getX());
     }
 
+    public static byte[] toCompressedBytes(Point P) {
+        byte[] xBytes = NostrUtil.bytesFromBigInteger(P.getX());
+        byte[] compressed = new byte[33];
+        compressed[0] = (byte) (P.hasEvenY() ? 0x02 : 0x03); // 标识 Y 坐标的奇偶性
+        System.arraycopy(xBytes, 0, compressed, 1, xBytes.length);
+        return compressed;
+    }
+
     // previously 'pointFromBytes()'
     public static Point liftX(byte[] b) {
 

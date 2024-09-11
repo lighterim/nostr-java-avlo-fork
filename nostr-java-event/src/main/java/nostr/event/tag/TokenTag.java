@@ -38,7 +38,7 @@ public class TokenTag extends BaseTag {
         tag.address(Optional.ofNullable(node.get(4)).orElseThrow().asText());
         String text = Optional.ofNullable(node.get(5)).orElseThrow().asText();
         final BigDecimal amount = new BigDecimal(text);
-        tag.amount(amount);
+        tag.amount(amount.stripTrailingZeros());
         return (T) tag.build();
     }
 }

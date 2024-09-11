@@ -41,7 +41,7 @@ public class TakeTag extends BaseTag {
         String takerPubkey = Optional.ofNullable(node.get(7)).orElseThrow().asText();
 
         return (T)TakeTag.builder().side(Side.valueOf(side)).intentEventId(eventId).makerNip05(makerNip05)
-                .makerPubkey(makerPubkey).volume(new BigDecimal(volumeStr)).takerNip05(takerNip05).takerPubkey(takerPubkey)
+                .makerPubkey(makerPubkey).volume(new BigDecimal(volumeStr).stripTrailingZeros()).takerNip05(takerNip05).takerPubkey(takerPubkey)
                 .build();
     }
 }

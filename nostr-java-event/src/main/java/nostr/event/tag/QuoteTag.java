@@ -38,13 +38,13 @@ public class QuoteTag extends BaseTag {
 
   public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
     String text = Optional.ofNullable(node.get(1)).orElseThrow().asText();
-    final BigDecimal number = new BigDecimal(text);
+    final BigDecimal number = new BigDecimal(text).stripTrailingZeros();
     final String currency = Optional.ofNullable(node.get(2)).orElseThrow().asText();
 
     QuoteTag tag = QuoteTag.builder().number(number).currency(currency).build();
     if(Optional.ofNullable(node.get(3)).isPresent()) {
       String usdRateStr = Optional.ofNullable(node.get(3)).orElseThrow().asText();
-      tag.setUsdRate(new BigDecimal(usdRateStr));
+      tag.setUsdRate(new BigDecimal(usdRateStr).stripTrailingZeros());
     }
 
     return (T) tag;

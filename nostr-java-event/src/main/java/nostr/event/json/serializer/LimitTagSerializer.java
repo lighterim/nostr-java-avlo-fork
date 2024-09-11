@@ -19,10 +19,10 @@ public class LimitTagSerializer extends JsonSerializer<LimitTag> {
             jsonGenerator.writeString(t.getCurrency());
         }
         if(t.getLowLimit()!=null && t.getLowLimit().compareTo(BigDecimal.ZERO) > 0){
-            jsonGenerator.writeNumber(t.getLowLimit());
+            jsonGenerator.writeNumber(t.getLowLimit().stripTrailingZeros());
         }
         if(t.getUpLimit()!=null && t.getUpLimit().compareTo(BigDecimal.ZERO) > 0){
-            jsonGenerator.writeNumber(t.getUpLimit());
+            jsonGenerator.writeNumber(t.getUpLimit().stripTrailingZeros());
         }
         jsonGenerator.writeEndArray();
     }

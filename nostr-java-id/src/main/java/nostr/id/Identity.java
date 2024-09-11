@@ -14,6 +14,8 @@ import nostr.event.impl.GenericEvent;
 import nostr.event.tag.DelegationTag;
 import nostr.util.NostrUtil;
 
+import javax.crypto.Cipher;
+import java.util.Base64;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 
@@ -106,4 +108,40 @@ public class Identity {
         return NostrUtil.createRandomByteArray(32);
     }
 
+    // 使用公钥加密
+    public static String encryptWithPublicKey(String plainText, PublicKey publicKey) throws Exception {
+        Cipher cipher = Cipher.getInstance("ECIES", "BC");
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey.toJavaPublicKey());  // 使用公钥加密
+        byte[] encryptedBytes = cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(encryptedBytes);
+    }
+
+    // 使用私钥解密
+    public String decryptWithPrivateKey(String encryptedText) throws Exception {
+        Cipher cipher = Cipher.getInstance("ECIES", "BC");
+        cipher.init(Cipher.DECRYPT_MODE, this.privateKey.toJavaPrivateKey());  // 使用私钥解密
+        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedText));
+        return new String(decryptedBytes, StandardCharsets.UTF_8);
+    }
+
+
+    // 示例：使用公钥加密、私钥解密
+    public static void main(String[] args) throws Exception {
+        // 生成随机身份
+        Identity identity = Identity.generateRandomIdentity();
+
+        // 获取公钥和私钥
+        PublicKey publicKey = identity.getPublicKey();
+        System.out.println(publicKey.toString());
+        PrivateKey privateKey = identity.getPrivateKey();
+
+        // 加密消息
+        String message = privateKey.toString();
+        String encryptedMessage = Identity.encryptWithPublicKey(message, publicKey);
+        System.out.println("Encrypted Message: " + encryptedMessage);
+
+        // 解密消息
+        String decryptedMessage = identity.decryptWithPrivateKey(encryptedMessage);
+        System.out.println("Decrypted Message: " + decryptedMessage);
+    }
 }

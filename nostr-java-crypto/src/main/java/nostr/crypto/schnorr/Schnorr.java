@@ -141,6 +141,7 @@ public class Schnorr {
             throw new Exception("The secret key must be an integer in the range 1..n-1.");
         }
         Point ret = Point.mul(Point.G, x);
-        return Point.bytesFromPoint(ret);
+//        return Point.bytesFromPoint(ret);
+        return Point.toCompressedBytes(ret);
     }
 }

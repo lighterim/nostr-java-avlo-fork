@@ -7,7 +7,8 @@ module nostr.base {
     requires nostr.util;
     requires nostr.crypto;
     requires java.logging;
-    
+    requires org.bouncycastle.provider;
+
     exports nostr.base;
     exports nostr.base.annotation;
 }

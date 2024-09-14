@@ -137,6 +137,7 @@ public class Identity {
 
         // 加密消息
         String message = privateKey.toString();
+        System.out.println("plain text: "+message);
         String encryptedMessage = Identity.encryptWithPublicKey(message, publicKey);
         System.out.println("Encrypted Message: " + encryptedMessage);
 

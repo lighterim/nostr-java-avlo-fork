@@ -15,9 +15,9 @@ public class QuoteTagSerializer extends JsonSerializer<QuoteTag> {
     public void serialize(QuoteTag t, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartArray();
         jsonGenerator.writeString(t.getCode());
-        jsonGenerator.writeNumber(t.getNumber().stripTrailingZeros().toPlainString());
+        jsonGenerator.writeString(t.getNumber().stripTrailingZeros().toPlainString());
         jsonGenerator.writeString(t.getCurrency());
-        jsonGenerator.writeNumber(t.getUsdRate().stripTrailingZeros().toPlainString());
+        jsonGenerator.writeString(t.getUsdRate().stripTrailingZeros().toPlainString());
         jsonGenerator.writeEndArray();
     }
 

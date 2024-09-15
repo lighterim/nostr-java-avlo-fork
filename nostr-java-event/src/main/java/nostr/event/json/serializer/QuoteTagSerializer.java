@@ -22,10 +22,12 @@ public class QuoteTagSerializer extends JsonSerializer<QuoteTag> {
     }
 
 
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
 //        BigDecimal bd = new BigDecimal("0.00000000000001000000");
-//        System.out.println("默认使用科学计数法：" + bd);
-//        System.out.println("去掉末尾的0：" + bd.stripTrailingZeros());
-//        System.out.println("不使用科学计数法：" + bd.stripTrailingZeros().toPlainString());
-//    }
+        BigDecimal bd = new BigDecimal("10.00");
+        System.out.println("默认使用科学计数法：" + bd);
+        System.out.println("去掉末尾的0：" + bd.stripTrailingZeros().toPlainString());
+        String n = bd.stripTrailingZeros().toPlainString();
+        System.out.println(String.format("不使用科学计数法：n:%s, n_str:%s", n, new BigDecimal(n)));
+    }
 }

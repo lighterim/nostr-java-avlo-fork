@@ -12,10 +12,7 @@ import nostr.event.BaseTag;
 import nostr.event.Kind;
 import nostr.event.NIP77Event;
 import nostr.event.TradeStatus;
-import nostr.event.tag.PaymentTag;
-import nostr.event.tag.QuoteTag;
-import nostr.event.tag.TakeTag;
-import nostr.event.tag.TokenTag;
+import nostr.event.tag.*;
 
 import java.util.List;
 
@@ -35,6 +32,8 @@ public class TakeIntentEvent extends NIP77Event {
     private QuoteTag quoteTag;
     @JsonIgnore
     private PaymentTag paymentTag;
+    @JsonIgnore
+    private TradeKeyTag tradeKeyTag;
 
     @JsonProperty("trade_id")
     private long tradeId;
@@ -75,6 +74,9 @@ public class TakeIntentEvent extends NIP77Event {
         }
         if (paymentTag == null) {
             paymentTag = findTag(PaymentTag.class, PAYMENT_TAG_CODE);
+        }
+        if (tradeKeyTag == null){
+            tradeKeyTag = findTag(TradeKeyTag.class, TRADE_KEY_TAG_CODE);
         }
     }
 

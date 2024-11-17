@@ -28,6 +28,7 @@ public class TradeMessageEvent extends NIP77Event {
     @JsonIgnore
     private LedgerTag ledgerTag;
 
+
     public TradeMessageEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content) {
         super(pubKey, Kind.TRADE_MESSAGE, tags, content);
         initTags();

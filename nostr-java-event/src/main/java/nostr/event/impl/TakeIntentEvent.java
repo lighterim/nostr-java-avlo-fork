@@ -27,6 +27,8 @@ public class TakeIntentEvent extends NIP77Event {
     @JsonIgnore
     private TakeTag takeTag;
     @JsonIgnore
+    private EIP712Tag eip712Tag;
+    @JsonIgnore
     private TokenTag tokenTag;
     @JsonIgnore
     private QuoteTag quoteTag;
@@ -63,6 +65,9 @@ public class TakeIntentEvent extends NIP77Event {
     }
 
     private void initTags() {
+        if (eip712Tag == null) {
+            eip712Tag = findTag(EIP712Tag.class, EIP712_TAG_CODE);
+        }
         if (takeTag == null) {
             takeTag = findTag(TakeTag.class, TAKE_TAG_CODE);
         }
@@ -90,7 +95,7 @@ public class TakeIntentEvent extends NIP77Event {
     public void validate() {
         super.validate();
         if (
-                takeTag == null || isBlank(takeTag.getIntentEventId()) || !gtZero(takeTag.getVolume())
+                eip712Tag == null || takeTag == null || isBlank(takeTag.getIntentEventId()) || !gtZero(takeTag.getVolume())
                         || tokenTag == null || quoteTag == null || paymentTag == null
         ) {
             throw new AssertionError("take tag incorrect.", null);

@@ -42,7 +42,7 @@ public class TokenTag extends BaseTag {
         String text = Optional.ofNullable(node.get(5)).orElseThrow().asText();
         final BigDecimal amount = new BigDecimal(text);
         tag.amount(amount.stripTrailingZeros());
-        tag.chainId(Optional.ofNullable(node.get(6)).orElseThrow().bigIntegerValue());
+        tag.chainId(BigInteger.valueOf(Optional.ofNullable(node.get(6)).orElseThrow().asLong()));
         if(Optional.ofNullable(node.get(7)).isPresent()){
             tag.expiryTime(node.get(7).asText());
         }

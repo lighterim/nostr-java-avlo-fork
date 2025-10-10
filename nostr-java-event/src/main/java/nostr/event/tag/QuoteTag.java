@@ -50,16 +50,18 @@ public class QuoteTag extends BaseTag {
     String text = Optional.ofNullable(node.get(1)).orElseThrow().asText();
     final BigDecimal number = new BigDecimal(text).stripTrailingZeros();
     final String currency = Optional.ofNullable(node.get(2)).orElseThrow().asText();
-    final String timestamp = Optional.ofNullable(node.get(4)).orElseThrow().asText();
-    final String signature = Optional.ofNullable(node.get(5)).orElseThrow().asText();
 
-    QuoteTag tag = QuoteTag.builder().number(number).timestamp(timestamp).signature(signature).currency(currency).build();
+    QuoteTag tag = QuoteTag.builder().number(number).currency(currency).build();
     if(Optional.ofNullable(node.get(3)).isPresent()) {
       String usdRateStr = Optional.ofNullable(node.get(3)).orElseThrow().asText();
       tag.setUsdRate(new BigDecimal(usdRateStr).stripTrailingZeros());
     }
-
-
+    if(Optional.ofNullable(node.get(4)).isPresent()){
+      tag.setTimestamp(node.get(4).asText());
+    }
+    if(Optional.ofNullable(node.get(5)).isPresent()){
+      tag.setSignature(node.get(5).asText());
+    }
     return (T) tag;
   }
 }

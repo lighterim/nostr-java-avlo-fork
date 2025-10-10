@@ -19,15 +19,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @JsonSerialize(using = LimitTagSerializer.class)
 public class LimitTag extends BaseTag {
-    private final String currency;
     private final BigDecimal lowLimit;
     private final BigDecimal upLimit;
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
         LimitTag.LimitTagBuilder tag = LimitTag.builder();
-        Optional.ofNullable(node.get(1)).ifPresent(n->tag.currency(n.asText()));
-        Optional.ofNullable(node.get(2)).ifPresent(n -> tag.lowLimit(new BigDecimal(n.asText()).stripTrailingZeros()));
-        Optional.ofNullable(node.get(3)).ifPresent(n -> tag.upLimit(new BigDecimal(n.asText()).stripTrailingZeros()));
+        Optional.ofNullable(node.get(1)).ifPresent(n -> tag.lowLimit(new BigDecimal(n.asText()).stripTrailingZeros()));
+        Optional.ofNullable(node.get(2)).ifPresent(n -> tag.upLimit(new BigDecimal(n.asText()).stripTrailingZeros()));
         return (T) tag.build();
     }
 }

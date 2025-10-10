@@ -21,6 +21,8 @@ import java.util.List;
 public class PostIntentEvent extends NIP77Event {
 
     @JsonIgnore
+    private EIP712Tag eip712Tag;
+    @JsonIgnore
     private TokenTag tokenTag;
     @JsonIgnore
     private QuoteTag quoteTag;
@@ -37,6 +39,9 @@ public class PostIntentEvent extends NIP77Event {
     }
 
     private void initTags() {
+        if(eip712Tag == null) {
+            this.eip712Tag = findTag(EIP712Tag.class, EIP712_TAG_CODE);
+        }
         if(quoteTag == null) {
             this.quoteTag = findTag(QuoteTag.class, QUOTE_TAG_CODE);
         }
@@ -63,10 +68,10 @@ public class PostIntentEvent extends NIP77Event {
     @Override
     public void validate() {
         super.validate();
-        if(tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
+        if(eip712Tag == null || tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
                 || sideTag == null || sideTag.getSide()==null || quoteTag == null || isBlank(quoteTag.getCurrency()) || !gtZero(quoteTag.getNumber())
                 || paymentTags == null || paymentTags.isEmpty()){
-            throw new AssertionError("tokenTag, sideTag, quoteTag, payment must not be empty!");
+            throw new AssertionError("eip712Tag, tokenTag, sideTag, quoteTag, payment must not be empty!");
         }
     }
 }

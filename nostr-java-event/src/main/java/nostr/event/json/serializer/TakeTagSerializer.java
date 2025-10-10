@@ -19,6 +19,8 @@ public class TakeTagSerializer extends JsonSerializer<TakeTag> {
         jsonGenerator.writeString(takeTag.getVolume().stripTrailingZeros().toPlainString());
         jsonGenerator.writeString(takeTag.getTakerNip05());
         jsonGenerator.writeString(takeTag.getTakerPubkey());
+        jsonGenerator.writeString(takeTag.getBuyerFeeRate().stripTrailingZeros().toPlainString());
+        jsonGenerator.writeString(takeTag.getSellerFeeRate().stripTrailingZeros().toPlainString());
         jsonGenerator.writeEndArray();
     }
 }

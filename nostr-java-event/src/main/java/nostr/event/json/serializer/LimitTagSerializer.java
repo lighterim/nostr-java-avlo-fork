@@ -15,9 +15,6 @@ public class LimitTagSerializer extends JsonSerializer<LimitTag> {
     public void serialize(LimitTag t, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartArray();
         jsonGenerator.writeString(t.getCode());
-        if(t.getCurrency()!=null && !t.getCurrency().isBlank()){
-            jsonGenerator.writeString(t.getCurrency());
-        }
         if(t.getLowLimit()!=null && t.getLowLimit().compareTo(BigDecimal.ZERO) > 0){
             jsonGenerator.writeNumber(t.getLowLimit().stripTrailingZeros().toPlainString());
         }

@@ -25,7 +25,7 @@ public class QuoteTag extends BaseTag {
   @Key
   @JsonProperty
   @JsonFormat(shape = JsonFormat.Shape.STRING)
-  private BigDecimal number;
+  private BigDecimal number; //price
 
   @Key
   @JsonProperty
@@ -36,16 +36,29 @@ public class QuoteTag extends BaseTag {
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private BigDecimal usdRate;
 
+  @Key
+  @JsonProperty
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  private String timestamp;
+
+  @Key
+  @JsonProperty
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  private String signature;
+
   public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
     String text = Optional.ofNullable(node.get(1)).orElseThrow().asText();
     final BigDecimal number = new BigDecimal(text).stripTrailingZeros();
     final String currency = Optional.ofNullable(node.get(2)).orElseThrow().asText();
+    final String timestamp = Optional.ofNullable(node.get(4)).orElseThrow().asText();
+    final String signature = Optional.ofNullable(node.get(5)).orElseThrow().asText();
 
-    QuoteTag tag = QuoteTag.builder().number(number).currency(currency).build();
+    QuoteTag tag = QuoteTag.builder().number(number).timestamp(timestamp).signature(signature).currency(currency).build();
     if(Optional.ofNullable(node.get(3)).isPresent()) {
       String usdRateStr = Optional.ofNullable(node.get(3)).orElseThrow().asText();
       tag.setUsdRate(new BigDecimal(usdRateStr).stripTrailingZeros());
     }
+
 
     return (T) tag;
   }

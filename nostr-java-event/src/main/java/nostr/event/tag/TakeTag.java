@@ -29,6 +29,8 @@ public class TakeTag extends BaseTag {
     private final BigDecimal volume;
     private final String takerNip05;
     private final String takerPubkey;
+    private final BigDecimal sellerFeeRate;
+    private final BigDecimal buyerFeeRate;
 
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
@@ -39,9 +41,13 @@ public class TakeTag extends BaseTag {
         final String volumeStr = Optional.ofNullable(node.get(5)).orElseThrow().asText();
         String takerNip05 = Optional.ofNullable(node.get(6)).orElseThrow().asText();
         String takerPubkey = Optional.ofNullable(node.get(7)).orElseThrow().asText();
+        final String sellerFeeRate = Optional.ofNullable(node.get(8)).orElseThrow().asText();
+        final String buyerFeeRate = Optional.ofNullable(node.get(9)).orElseThrow().asText();
 
         return (T)TakeTag.builder().side(Side.valueOf(side)).intentEventId(eventId).makerNip05(makerNip05)
                 .makerPubkey(makerPubkey).volume(new BigDecimal(volumeStr).stripTrailingZeros()).takerNip05(takerNip05).takerPubkey(takerPubkey)
+                .sellerFeeRate(new BigDecimal(sellerFeeRate).stripTrailingZeros())
+                .buyerFeeRate(new BigDecimal(buyerFeeRate).stripTrailingZeros())
                 .build();
     }
 }

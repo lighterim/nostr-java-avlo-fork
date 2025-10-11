@@ -8,6 +8,7 @@ import nostr.event.BaseTag;
 import nostr.event.NIP77Event;
 import nostr.event.json.serializer.EIP712TagSerializer;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class EIP712Tag extends BaseTag {
         String contractAddress = Optional.ofNullable(node.get(2)).orElseThrow().asText();
         String domainAppName = Optional.ofNullable(node.get(3)).orElseThrow().asText();
         String domainVersion = Optional.ofNullable(node.get(4)).orElseThrow().asText();
-        String sign = Optional.ofNullable(node.get(5)).orElseThrow().asText();
+        String sign = node.has(5) ? node.get(5).asText() : "";
 
         EIP712Tag tag = EIP712Tag.builder().domainAppName(domainAppName)
                 .domainVersion(domainVersion).contractAddress(contractAddress).walletAddress(walletAddress).sign(sign).build();

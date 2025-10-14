@@ -39,6 +39,7 @@ public class TagDeserializer<T extends BaseTag> extends JsonDeserializer<T> {
                 case NIP77Event.PAYMENT_TAG_CODE -> PaymentTag.deserialize(node);
                 case NIP77Event.MAKE_TAG_CODE -> MakeTag.deserialize(node);
                 case NIP77Event.EIP712_TAG_CODE -> EIP712Tag.deserialize(node);
+                case NIP77Event.ACCOUNT_TAG_CODE -> AccountTag.deserialize(node);
                 case NIP77Event.TAKE_TAG_CODE -> TakeTag.deserialize(node);
                 case NIP77Event.LIMIT_TAG_CODE -> LimitTag.deserialize(node);
                 case NIP77Event.CREATED_BY_TAG_CODE -> CreatedByTag.deserialize(node);

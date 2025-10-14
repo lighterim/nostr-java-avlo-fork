@@ -30,6 +30,7 @@ public enum Kind {
     POST_INTENT(30_077, "post_intent"),
     TAKE_INTENT(30_078, "take_intent"),
     TRADE_MESSAGE(30_079, "trade_message"),
+    ACCOUNT_INTENT(30_080, "account_intent"),
     ZAP_REQUEST(9734, "zap_request"),
     ZAP_RECEIPT(9735, "zap_receipt"),
     COMMUNITY_CREATE(34550, "community_create"),

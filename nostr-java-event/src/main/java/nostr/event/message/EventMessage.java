@@ -98,6 +98,7 @@ public class EventMessage extends BaseMessage {
         }
 
         return switch (kind) {
+            case ACCOUNT_INTENT -> mapper.convertValue(map, AccountIntentEvent.class);
             case TAKE_INTENT -> mapper.convertValue(map, TakeIntentEvent.class);
             case POST_INTENT -> mapper.convertValue(map, PostIntentEvent.class);
             case TRADE_MESSAGE -> mapper.convertValue(map, TradeMessageEvent.class);

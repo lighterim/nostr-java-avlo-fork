@@ -13,6 +13,7 @@ public class NIP77Event extends GenericEvent {
 
     public static final String TAKE_TAG_CODE = "take";
     public static final String TOKEN_TAG_CODE = "token";
+    public static final String ACCOUNT_TAG_CODE = "account";
     public static final String QUOTE_TAG_CODE = "quote";
     public static final String PAYMENT_TAG_CODE = "payment";
     public static final String EIP712_TAG_CODE = "eip712";
@@ -22,6 +23,7 @@ public class NIP77Event extends GenericEvent {
     public static final String LEDGER_TAG_CODE = "ledger";
     public static final String TRADE_KEY_TAG_CODE = "keys";
     public static final String POST_INTENT_EVENT = "post_intent";
+    public static final String ACCOUNT_INTENT_EVENT = "account_intent";
     public static final String TAKE_INTENT_EVENT = "take_intent";
     public static final String TRADE_MESSAGE_EVENT = "trade_message";
 

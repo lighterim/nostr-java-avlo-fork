@@ -14,6 +14,7 @@ public class NIP77Event extends GenericEvent {
     public static final String TAKE_TAG_CODE = "take";
     public static final String TOKEN_TAG_CODE = "token";
     public static final String ACCOUNT_TAG_CODE = "account";
+    public static final String PERMIT2_TAG_CODE = "permit2";
     public static final String QUOTE_TAG_CODE = "quote";
     public static final String PAYMENT_TAG_CODE = "payment";
     public static final String EIP712_TAG_CODE = "eip712";

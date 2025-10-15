@@ -29,6 +29,8 @@ public class PostIntentEvent extends NIP77Event {
     @JsonIgnore
     private MakeTag sideTag;
     @JsonIgnore
+    private Permit2Tag permit2Tag;
+    @JsonIgnore
     private LimitTag limitTag;
     @JsonIgnore
     private List<PaymentTag> paymentTags;
@@ -39,6 +41,9 @@ public class PostIntentEvent extends NIP77Event {
     }
 
     private void initTags() {
+        if(permit2Tag == null) {
+            this.permit2Tag = findTag(Permit2Tag.class, PERMIT2_TAG_CODE);
+        }
         if(eip712Tag == null) {
             this.eip712Tag = findTag(EIP712Tag.class, EIP712_TAG_CODE);
         }
@@ -68,10 +73,10 @@ public class PostIntentEvent extends NIP77Event {
     @Override
     public void validate() {
         super.validate();
-        if(eip712Tag == null || tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
+        if(permit2Tag == null ||eip712Tag == null || tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
                 || sideTag == null || sideTag.getSide()==null || quoteTag == null || isBlank(quoteTag.getCurrency()) || !gtZero(quoteTag.getNumber())
                 || paymentTags == null || paymentTags.isEmpty()){
-            throw new AssertionError("eip712Tag, tokenTag, sideTag, quoteTag, payment must not be empty!");
+            throw new AssertionError("permit2Tag, eip712Tag, tokenTag, sideTag, quoteTag, payment must not be empty!");
         }
     }
 }

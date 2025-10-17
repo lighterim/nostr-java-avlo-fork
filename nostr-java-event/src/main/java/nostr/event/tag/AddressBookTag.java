@@ -6,8 +6,7 @@ import lombok.*;
 import nostr.base.annotation.Tag;
 import nostr.event.BaseTag;
 import nostr.event.NIP77Event;
-import nostr.event.json.serializer.AccountTagSerializer;
-import nostr.event.json.serializer.RemarkTagSerializer;
+import nostr.event.json.serializer.AddressBookTagSerializer;
 
 import java.math.BigInteger;
 import java.util.Optional;
@@ -15,10 +14,10 @@ import java.util.Optional;
 @Builder
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Tag(code = NIP77Event.REMARK_TAG_CODE, nip=77)
+@Tag(code = NIP77Event.ADDRESS_BOOK_TAG_CODE, nip=77)
 @RequiredArgsConstructor
-@JsonSerialize(using = RemarkTagSerializer.class)
-public class RemarkTag extends BaseTag {
+@JsonSerialize(using = AddressBookTagSerializer.class)
+public class AddressBookTag extends BaseTag {
     private final String name;
     private final String address;
     private final String pubkey;
@@ -34,7 +33,7 @@ public class RemarkTag extends BaseTag {
         final BigInteger chainId = BigInteger.valueOf(Optional.ofNullable(node.get(5)).orElseThrow().asLong());
         final String createdBy = Optional.ofNullable(node.get(6)).orElseThrow().asText();
 
-        RemarkTag.RemarkTagBuilder tag = RemarkTag.builder().nftId(nftId)
+        AddressBookTag.AddressBookTagBuilder tag = AddressBookTag.builder().nftId(nftId)
                 .chainId(chainId).name(name).address(address).pubkey(pubkey)
                 .createdBy(createdBy);
 

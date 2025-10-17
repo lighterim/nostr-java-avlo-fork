@@ -3,14 +3,13 @@ package nostr.event.json.serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import nostr.event.tag.AccountTag;
-import nostr.event.tag.RemarkTag;
+import nostr.event.tag.AddressBookTag;
 
 import java.io.IOException;
 
-public class RemarkTagSerializer extends JsonSerializer<RemarkTag> {
+public class AddressBookTagSerializer extends JsonSerializer<AddressBookTag> {
     @Override
-    public void serialize(RemarkTag tag, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(AddressBookTag tag, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartArray();
         jsonGenerator.writeString(tag.getCode());
         jsonGenerator.writeString(tag.getAddress());

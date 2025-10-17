@@ -46,7 +46,7 @@ public class TagDeserializer<T extends BaseTag> extends JsonDeserializer<T> {
                 case NIP77Event.LEDGER_TAG_CODE -> LedgerTag.deserialize(node);
                 case NIP77Event.TRADE_KEY_TAG_CODE -> TradeKeyTag.deserialize(node);
                 case NIP77Event.PERMIT2_TAG_CODE -> Permit2Tag.deserialize(node);
-                case NIP77Event.REMARK_TAG_CODE -> RemarkTag.deserialize(node);
+                case NIP77Event.ADDRESS_BOOK_TAG_CODE -> AddressBookTag.deserialize(node);
                 default -> (T) new GenericTagDecoder<>().decode(node.toString());
             };
         }

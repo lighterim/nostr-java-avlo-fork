@@ -7,6 +7,7 @@ import nostr.base.annotation.Tag;
 import nostr.event.BaseTag;
 import nostr.event.NIP77Event;
 import nostr.event.json.serializer.AccountTagSerializer;
+import nostr.event.json.serializer.Permit2TagSerializer;
 
 import java.math.BigInteger;
 import java.util.Optional;
@@ -16,16 +17,18 @@ import java.util.Optional;
 @EqualsAndHashCode(callSuper = true)
 @Tag(code = NIP77Event.PERMIT2_TAG_CODE, nip=77)
 @RequiredArgsConstructor
-@JsonSerialize(using = AccountTagSerializer.class)
+@JsonSerialize(using = Permit2TagSerializer.class)
 public class Permit2Tag extends BaseTag {
     private final String nonce;
     private final String signature;
+    private final String payer;
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
         final String nonce = Optional.ofNullable(node.get(1)).orElseThrow().asText();
         final String signature = Optional.ofNullable(node.get(2)).orElseThrow().asText();
+        final String payer = Optional.ofNullable(node.get(3)).orElseThrow().asText();
 
-        Permit2Tag.Permit2TagBuilder tag = Permit2Tag.builder().nonce(nonce)
+        Permit2Tag.Permit2TagBuilder tag = Permit2Tag.builder().nonce(nonce).payer(payer)
                 .signature(signature);
 
         return (T) tag.build();

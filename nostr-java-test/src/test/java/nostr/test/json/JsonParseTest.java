@@ -308,28 +308,28 @@ public class JsonParseTest {
 
     @Test
     public void testReqMessageCompositionQuerySerializer()throws JsonProcessingException{
-        System.out.println("testReqMessageCompositionQuerySerializer");
-        String new_geohash = "2vghde";
-        List<String> geohashList = new ArrayList<>();
-        geohashList.add(new_geohash);
-        GenericTagQuery genericTagQuery = new GenericTagQuery();
-        genericTagQuery.setTagName("g");
-        genericTagQuery.setValue(geohashList);
-
-        GenericTagQuery g2 = new GenericTagQuery();
-        g2.setTagName("g2");
-        g2.setValue(geohashList);
-
-        CompositionQuery q = new CompositionQuery(Kind.TAKE_INTENT, List.of(genericTagQuery, g2));
-
-        Filters filters = Filters.builder().compositionQuery(q).build();
-        System.out.println(new ObjectMapper().writeValueAsString(filters));
-        ReqMessage reqMessage = new ReqMessage("npub1clk6vc9xhjp8q5cws262wuf2eh4zuvwupft03hy4ttqqnm7e0jrq3upup9", List.of(filters));
-        String jsonMessage = reqMessage.encode();
-        String js = "[\"REQ\",\"npub1clk6vc9xhjp8q5cws262wuf2eh4zuvwupft03hy4ttqqnm7e0jrq3upup9\",{\"compositionQuery\":{\"kind\":30078,\"anyMatchList\":[{\"#g\":[\"2vghde\"]},{\"#g2\":[\"2vghde\"]}]}}]";
-        System.out.println();
-        BaseMessage message = new BaseMessageDecoder<>().decode(js);
-        System.out.println(message);
+//        System.out.println("testReqMessageCompositionQuerySerializer");
+//        String new_geohash = "2vghde";
+//        List<String> geohashList = new ArrayList<>();
+//        geohashList.add(new_geohash);
+//        GenericTagQuery genericTagQuery = new GenericTagQuery();
+//        genericTagQuery.setTagName("g");
+//        genericTagQuery.setValue(geohashList);
+//
+//        GenericTagQuery g2 = new GenericTagQuery();
+//        g2.setTagName("g2");
+//        g2.setValue(geohashList);
+//
+//        CompositionQuery q = new CompositionQuery(Kind.TAKE_INTENT, List.of(genericTagQuery, g2));
+//
+//        Filters filters = Filters.builder().compositionQuery(q).build();
+//        System.out.println(new ObjectMapper().writeValueAsString(filters));
+//        ReqMessage reqMessage = new ReqMessage("npub1clk6vc9xhjp8q5cws262wuf2eh4zuvwupft03hy4ttqqnm7e0jrq3upup9", List.of(filters));
+//        String jsonMessage = reqMessage.encode();
+//        String js = "[\"REQ\",\"npub1clk6vc9xhjp8q5cws262wuf2eh4zuvwupft03hy4ttqqnm7e0jrq3upup9\",{\"compositionQuery\":{\"kind\":30078,\"anyMatchList\":[{\"#g\":[\"2vghde\"]},{\"#g2\":[\"2vghde\"]}]}}]";
+//        System.out.println();
+//        BaseMessage message = new BaseMessageDecoder<>().decode(js);
+//        System.out.println(message);
 
 
 

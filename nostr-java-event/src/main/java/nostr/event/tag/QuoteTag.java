@@ -39,7 +39,7 @@ public class QuoteTag extends BaseTag {
   @Key
   @JsonProperty
   @JsonFormat(shape = JsonFormat.Shape.STRING)
-  private String timestamp;
+  private String timestamp; //deadline
 
   @Key
   @JsonProperty

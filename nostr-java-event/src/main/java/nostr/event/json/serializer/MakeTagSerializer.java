@@ -15,6 +15,7 @@ public class MakeTagSerializer extends JsonSerializer<MakeTag> {
         jsonGenerator.writeString(makeTag.getSide().getSide());
         jsonGenerator.writeString(makeTag.getMakerNip05());
         jsonGenerator.writeString(makeTag.getMakerPubkey());
+        jsonGenerator.writeString(makeTag.getIntentType().getDesc());
         jsonGenerator.writeEndArray();
     }
 }

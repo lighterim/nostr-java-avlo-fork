@@ -29,7 +29,7 @@ public class MakeTag extends BaseTag {
         String side = Optional.ofNullable(node.get(1)).orElseThrow().asText().toUpperCase();
         String makerNip05 = Optional.ofNullable(node.get(2)).orElseThrow().asText();
         String makerPubkey = Optional.ofNullable(node.get(3)).orElseThrow().asText();
-        IntentType intentType = IntentType.valueOf(Optional.ofNullable(node.get(3)).orElseThrow().asText());
+        IntentType intentType = IntentType.valueOf(Optional.ofNullable(node.get(4)).orElseThrow().asText());
         MakeTag tag = MakeTag.builder().intentType(intentType).side(Side.valueOf(side)).makerNip05(makerNip05).makerPubkey(makerPubkey).build();
         return (T)tag;
     }

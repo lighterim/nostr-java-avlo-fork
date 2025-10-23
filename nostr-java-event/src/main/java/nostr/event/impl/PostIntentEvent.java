@@ -8,6 +8,7 @@ import lombok.NonNull;
 import nostr.base.PublicKey;
 import nostr.base.annotation.Event;
 import nostr.event.BaseTag;
+import nostr.event.IntentType;
 import nostr.event.Kind;
 import nostr.event.NIP77Event;
 import nostr.event.tag.*;
@@ -73,8 +74,10 @@ public class PostIntentEvent extends NIP77Event {
     @Override
     public void validate() {
         super.validate();
-        if(permit2Tag == null ||eip712Tag == null || tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
-                || sideTag == null || sideTag.getSide()==null || quoteTag == null || isBlank(quoteTag.getCurrency()) || !gtZero(quoteTag.getNumber())
+        if(permit2Tag == null || sideTag == null || sideTag.getSide()==null
+                || (sideTag.getIntentType() != IntentType.SIGNATURE_SELL && eip712Tag == null)  // the signature sell just only permit2Tag.
+                || tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
+                || quoteTag == null || isBlank(quoteTag.getCurrency()) || !gtZero(quoteTag.getNumber())
                 || paymentTags == null || paymentTags.isEmpty()){
             throw new AssertionError("permit2Tag, eip712Tag, tokenTag, sideTag, quoteTag, payment must not be empty!");
         }

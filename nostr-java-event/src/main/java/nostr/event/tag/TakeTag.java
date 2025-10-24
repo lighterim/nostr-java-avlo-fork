@@ -22,6 +22,7 @@ import java.util.Optional;
 public class TakeTag extends BaseTag {
 
     private final Side side;
+    /** eventId for maker of Intent */
     private final String intentEventId;
     private final String makerNip05;
     private final String makerPubkey;

@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import nostr.base.annotation.Key;
 import nostr.base.annotation.Tag;
 import nostr.event.BaseTag;
 import nostr.event.NIP77Event;
+import nostr.event.json.serializer.PaymentTagSerializer;
+import nostr.event.json.serializer.QuoteTagSerializer;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -19,7 +22,7 @@ import java.util.Optional;
 @Tag(code = NIP77Event.QUOTE_TAG_CODE, nip = 77)
 @RequiredArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"number", "currency", "usd_rate"})
+@JsonSerialize(using = QuoteTagSerializer.class)
 public class QuoteTag extends BaseTag {
 
   @Key
@@ -53,8 +56,10 @@ public class QuoteTag extends BaseTag {
 
     QuoteTag tag = QuoteTag.builder().number(number).currency(currency).build();
     if(Optional.ofNullable(node.get(3)).isPresent()) {
-      String usdRateStr = Optional.ofNullable(node.get(3)).orElseThrow().asText();
-      tag.setUsdRate(new BigDecimal(usdRateStr).stripTrailingZeros());
+      String usdRateStr = node.get(3).asText();
+      if(!usdRateStr.isBlank()) {
+        tag.setUsdRate(new BigDecimal(usdRateStr).stripTrailingZeros());
+      }
     }
     if(Optional.ofNullable(node.get(4)).isPresent()){
       tag.setTimestamp(node.get(4).asText());

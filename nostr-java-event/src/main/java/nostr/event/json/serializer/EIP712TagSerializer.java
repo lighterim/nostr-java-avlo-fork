@@ -11,6 +11,7 @@ public class EIP712TagSerializer extends JsonSerializer<EIP712Tag> {
     @Override
     public void serialize(EIP712Tag eip712Tag, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartArray();
+        jsonGenerator.writeString(eip712Tag.getCode());
         /**
          * private final String walletAddress;
          *     private final String contractAddress;

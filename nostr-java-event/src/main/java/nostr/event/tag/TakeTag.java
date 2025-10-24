@@ -32,6 +32,7 @@ public class TakeTag extends BaseTag {
     private final String takerPubkey;
     private final BigDecimal sellerFeeRate;
     private final BigDecimal buyerFeeRate;
+    /** Seller's fund source address (must support both the primary EOA and the TBA). **/
     private final String payer;
 
 

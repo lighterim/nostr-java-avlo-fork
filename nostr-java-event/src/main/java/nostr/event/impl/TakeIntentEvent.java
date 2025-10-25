@@ -35,6 +35,8 @@ public class TakeIntentEvent extends NIP77Event {
     @JsonIgnore
     private PaymentTag paymentTag;
     @JsonIgnore
+    private Permit2Tag permit2Tag;
+    @JsonIgnore
     private TradeKeyTag tradeKeyTag;
 
     @JsonProperty("trade_id")
@@ -80,6 +82,9 @@ public class TakeIntentEvent extends NIP77Event {
         if (paymentTag == null) {
             paymentTag = findTag(PaymentTag.class, PAYMENT_TAG_CODE);
         }
+        if(permit2Tag == null){
+            permit2Tag = findTag(Permit2Tag.class, PERMIT2_TAG_CODE);
+        }
         if (tradeKeyTag == null){
             tradeKeyTag = findTag(TradeKeyTag.class, TRADE_KEY_TAG_CODE);
         }
@@ -95,7 +100,7 @@ public class TakeIntentEvent extends NIP77Event {
     public void validate() {
         super.validate();
         if (
-                eip712Tag == null
+                eip712Tag == null || permit2Tag == null
                         || takeTag == null || isBlank(takeTag.getIntentEventId()) || !gtZero(takeTag.getVolume())
                         || tokenTag == null || quoteTag == null || paymentTag == null
         ) {

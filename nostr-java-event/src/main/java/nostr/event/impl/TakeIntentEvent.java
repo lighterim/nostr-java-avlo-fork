@@ -36,6 +36,9 @@ public class TakeIntentEvent extends NIP77Event {
     private PaymentTag paymentTag;
     @JsonIgnore
     private Permit2Tag permit2Tag;
+    /** when taker take intent, retrieve original(maker) intent. */
+    @JsonIgnore
+    private LimitTag limitTag;
     @JsonIgnore
     private TradeKeyTag tradeKeyTag;
 

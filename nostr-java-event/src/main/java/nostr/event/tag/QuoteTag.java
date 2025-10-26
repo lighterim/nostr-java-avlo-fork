@@ -55,17 +55,17 @@ public class QuoteTag extends BaseTag {
     final String currency = Optional.ofNullable(node.get(2)).orElseThrow().asText();
 
     QuoteTag tag = QuoteTag.builder().number(number).currency(currency).build();
-    if(Optional.ofNullable(node.get(3)).isPresent()) {
-      String usdRateStr = node.get(3).asText();
+    if(Optional.ofNullable(node.get(3)).isPresent()){
+      tag.setTimestamp(node.get(3).asText());
+    }
+    if(Optional.ofNullable(node.get(4)).isPresent()){
+      tag.setSignature(node.get(4).asText());
+    }
+    if(Optional.ofNullable(node.get(5)).isPresent()) {
+      String usdRateStr = node.get(5).asText();
       if(!usdRateStr.isBlank()) {
         tag.setUsdRate(new BigDecimal(usdRateStr).stripTrailingZeros());
       }
-    }
-    if(Optional.ofNullable(node.get(4)).isPresent()){
-      tag.setTimestamp(node.get(4).asText());
-    }
-    if(Optional.ofNullable(node.get(5)).isPresent()){
-      tag.setSignature(node.get(5).asText());
     }
     return (T) tag;
   }

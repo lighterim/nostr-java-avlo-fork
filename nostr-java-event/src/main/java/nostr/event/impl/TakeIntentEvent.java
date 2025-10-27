@@ -88,6 +88,9 @@ public class TakeIntentEvent extends NIP77Event {
         if(permit2Tag == null){
             permit2Tag = findTag(Permit2Tag.class, PERMIT2_TAG_CODE);
         }
+        if(limitTag == null){
+            limitTag = findTag(LimitTag.class, LIMIT_TAG_CODE);
+        }
         if (tradeKeyTag == null){
             tradeKeyTag = findTag(TradeKeyTag.class, TRADE_KEY_TAG_CODE);
         }
@@ -105,7 +108,8 @@ public class TakeIntentEvent extends NIP77Event {
         if (
                 eip712Tag == null || permit2Tag == null
                         || takeTag == null || isBlank(takeTag.getIntentEventId()) || !gtZero(takeTag.getVolume())
-                        || tokenTag == null || quoteTag == null || paymentTag == null
+                        || tokenTag == null || limitTag == null
+                        || quoteTag == null || paymentTag == null
         ) {
             throw new AssertionError("take tag incorrect.", null);
         }

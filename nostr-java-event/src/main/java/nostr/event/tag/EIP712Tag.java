@@ -20,16 +20,16 @@ import java.util.Optional;
 @JsonSerialize(using = EIP712TagSerializer.class)
 public class EIP712Tag extends BaseTag {
     private final String walletAddress;
-    private final String domainVersion;
-    private final String domainAppName;
     private final String contractAddress;
+    private final String domainAppName;
+    private final String domainVersion;
     private final String sign;
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
         String walletAddress = Optional.ofNullable(node.get(1)).orElseThrow().asText();
         String contractAddress = Optional.ofNullable(node.get(2)).orElseThrow().asText();
         String domainAppName = Optional.ofNullable(node.get(3)).orElseThrow().asText();
-        String domainVersion = Optional.ofNullable(node.get(4)).orElseThrow().asText();
+        String domainVersion = node.has(4) ? node.get(4).asText() : "";
         String sign = node.has(5) ? node.get(5).asText() : "";
 
         EIP712Tag tag = EIP712Tag.builder().domainAppName(domainAppName)

@@ -22,6 +22,7 @@ import java.util.Optional;
 public class TakeTag extends BaseTag {
 
     private final Side side;
+    /** eventId for maker of Intent */
     private final String intentEventId;
     private final String makerNip05;
     private final String makerPubkey;
@@ -31,6 +32,7 @@ public class TakeTag extends BaseTag {
     private final String takerPubkey;
     private final BigDecimal sellerFeeRate;
     private final BigDecimal buyerFeeRate;
+    /** Seller's fund source address (must support both the primary EOA and the TBA). **/
     private final String payer;
 
 

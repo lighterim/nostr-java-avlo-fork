@@ -6,6 +6,7 @@ module nostr.id {
     requires nostr.event;
     requires nostr.util;
     requires java.logging;
+    requires org.bouncycastle.provider;
 
     exports nostr.id;
 }

@@ -22,15 +22,17 @@ public class AccountTag extends BaseTag {
     private final BigInteger chainId;
     private final String tba;
     private final String nostrPubKey;
+    private final String ipfsHash;
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
         final String nftId = Optional.ofNullable(node.get(1)).orElseThrow().asText();
         final BigInteger chainId = BigInteger.valueOf(Optional.ofNullable(node.get(2)).orElseThrow().asLong());
         final String tba = Optional.ofNullable(node.get(3)).orElseThrow().asText();
         final String nostrPubKey = Optional.ofNullable(node.get(4)).orElseThrow().asText();
+        final String ipfsHash = Optional.ofNullable(node.get(5)).orElseThrow().asText();
 
         AccountTag.AccountTagBuilder tag = AccountTag.builder().nftId(nftId)
-                .chainId(chainId).tba(tba).nostrPubKey(nostrPubKey);
+                .ipfsHash(ipfsHash).chainId(chainId).tba(tba).nostrPubKey(nostrPubKey);
 
         return (T) tag.build();
     }

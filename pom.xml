@@ -42,8 +42,8 @@
         <!-- Annotation Dependency Versions -->
         <lombok.version>1.18.32</lombok.version>
 
-        <bcprov-jdk15on.version>1.70</bcprov-jdk15on.version>
-        <bcprov-jdk18on.version>1.78</bcprov-jdk18on.version>
+        <bcprov-jdk18on.version>1.82</bcprov-jdk18on.version>
+        <bcpkix.version>1.82</bcpkix.version>
 
         <jackson-databind.version>2.14.1</jackson-databind.version>
 
@@ -91,12 +91,6 @@
                 <version>${assertj.version}</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
-                <version>1.70</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 

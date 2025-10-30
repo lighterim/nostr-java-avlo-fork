@@ -14,6 +14,7 @@ import nostr.event.json.serializer.PaymentTagSerializer;
 import nostr.event.json.serializer.QuoteTagSerializer;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Optional;
 
 @Builder
@@ -42,7 +43,7 @@ public class QuoteTag extends BaseTag {
   @Key
   @JsonProperty
   @JsonFormat(shape = JsonFormat.Shape.STRING)
-  private String timestamp; //deadline
+  private BigInteger timestamp; //deadline
 
   @Key
   @JsonProperty
@@ -56,7 +57,10 @@ public class QuoteTag extends BaseTag {
 
     QuoteTag tag = QuoteTag.builder().number(number).currency(currency).build();
     if(Optional.ofNullable(node.get(3)).isPresent()){
-      tag.setTimestamp(node.get(3).asText());
+      String s = node.get(3).asText();
+      if(!s.isBlank()) {
+        tag.setTimestamp(new BigInteger(s));
+      }
     }
     if(Optional.ofNullable(node.get(4)).isPresent()){
       tag.setSignature(node.get(4).asText());

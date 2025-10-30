@@ -13,12 +13,12 @@ import nostr.crypto.schnorr.Schnorr;
 import nostr.event.impl.GenericEvent;
 import nostr.event.tag.DelegationTag;
 import nostr.util.NostrUtil;
-
 import javax.crypto.Cipher;
 import java.util.Base64;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
-
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import java.security.Security;
 /**
  * @author squirrel
  */
@@ -110,6 +110,9 @@ public class Identity {
 
     // 使用公钥加密
     public static String encryptWithPublicKey(String plainText, PublicKey publicKey) throws Exception {
+        if (Security.getProvider("BC") == null) {
+            Security.addProvider(new BouncyCastleProvider());
+        }
         Cipher cipher = Cipher.getInstance("ECIES", "BC");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey.toJavaPublicKey());  // 使用公钥加密
         byte[] encryptedBytes = cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
@@ -118,6 +121,9 @@ public class Identity {
 
     // 使用私钥解密
     public String decryptWithPrivateKey(String encryptedText) throws Exception {
+        if (Security.getProvider("BC") == null) {
+            Security.addProvider(new BouncyCastleProvider());
+        }
         Cipher cipher = Cipher.getInstance("ECIES", "BC");
         cipher.init(Cipher.DECRYPT_MODE, this.privateKey.toJavaPrivateKey());  // 使用私钥解密
         byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedText));

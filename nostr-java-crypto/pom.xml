@@ -30,6 +30,7 @@
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk18on</artifactId>
+            <version>${bcprov-jdk18on.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

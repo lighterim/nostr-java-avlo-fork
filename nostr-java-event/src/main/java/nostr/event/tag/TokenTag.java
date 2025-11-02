@@ -26,6 +26,7 @@ public class TokenTag extends BaseTag {
     private final BigDecimal amount;
     private final BigInteger chainId;
     private final String expiryTime;
+    private final BigDecimal tradedAmount;
 
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
@@ -45,6 +46,9 @@ public class TokenTag extends BaseTag {
         tag.chainId(BigInteger.valueOf(Optional.ofNullable(node.get(6)).orElseThrow().asLong()));
         if(Optional.ofNullable(node.get(7)).isPresent()){
             tag.expiryTime(node.get(7).asText());
+        }
+        if(Optional.ofNullable(node.get(8)).isPresent()){
+            tag.tradedAmount(node.get(8).decimalValue().stripTrailingZeros());
         }
         return (T) tag.build();
     }

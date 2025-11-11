@@ -67,4 +67,8 @@ public class NIP77Event extends GenericEvent {
     protected static boolean gtZero(BigDecimal dec){
         return dec != null && dec.compareTo(BigDecimal.ZERO) > 0;
     }
+
+    protected static boolean geZero(BigDecimal dec){
+        return dec != null && dec.compareTo(BigDecimal.ZERO) >= 0;
+    }
 }

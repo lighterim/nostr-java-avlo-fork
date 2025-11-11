@@ -77,7 +77,7 @@ public class PostIntentEvent extends NIP77Event {
         if(permit2Tag == null || sideTag == null || sideTag.getSide()==null
                 || (sideTag.getIntentType() != IntentType.SIGNATURE_SELL && eip712Tag == null)  // the signature sell just only permit2Tag.
                 || tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
-                || quoteTag == null || isBlank(quoteTag.getCurrency()) || !gtZero(quoteTag.getNumber())
+                || quoteTag == null || isBlank(quoteTag.getCurrency()) || !geZero(quoteTag.getNumber())
                 || paymentTags == null || paymentTags.isEmpty()){
             throw new AssertionError("permit2Tag, eip712Tag, tokenTag, sideTag, quoteTag, payment must not be empty!");
         }

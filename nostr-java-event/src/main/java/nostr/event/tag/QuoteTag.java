@@ -50,6 +50,8 @@ public class QuoteTag extends BaseTag {
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private String signature;
 
+  private Integer slippageBP;
+
   public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
     String text = Optional.ofNullable(node.get(1)).orElseThrow().asText();
     final BigDecimal number = new BigDecimal(text).stripTrailingZeros();
@@ -69,6 +71,12 @@ public class QuoteTag extends BaseTag {
       String usdRateStr = node.get(5).asText();
       if(!usdRateStr.isBlank()) {
         tag.setUsdRate(new BigDecimal(usdRateStr).stripTrailingZeros());
+      }
+    }
+    if(Optional.ofNullable(node.get(6)).isPresent()) {
+      int slippageBP = node.get(6).asInt();
+      if(slippageBP > 0) {
+        tag.setSlippageBP(slippageBP);
       }
     }
     return (T) tag;

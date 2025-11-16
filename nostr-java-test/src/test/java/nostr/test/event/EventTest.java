@@ -3,6 +3,9 @@ package nostr.test.event;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import nostr.base.ElementAttribute;
 
+import nostr.event.impl.PostIntentEvent;
+import nostr.event.tag.EIP712Tag;
+import nostr.event.tag.Permit2Tag;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +24,11 @@ import nostr.id.Identity;
 import nostr.test.EntityFactory;
 import nostr.util.NostrException;
 import nostr.util.NostrUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  *
@@ -155,5 +163,39 @@ public class EventTest {
 
         var muattr = (msg.getAttributes().iterator().next().getValue()).toString();
         Assertions.assertEquals(attr, muattr);
+    }
+
+    @Test
+    public void testPostIntentEvent() {
+        System.out.println("testPostIntentEvent");
+        PublicKey publicKey = Identity.generateRandomIdentity().getPublicKey();
+        String content = "testPostIntentEventContent";
+        List<BaseTag> tags = List.of(
+                newEIP712Tag(),
+                newPermit2Tag()
+        );
+        PostIntentEvent event = new PostIntentEvent(publicKey, tags, content);
+    }
+
+    private Permit2Tag newPermit2Tag() {
+        String nonce = String.valueOf(Math.random() * 10000000000000L);
+        String signature = "";
+        String payer = "";
+        String spender = "";
+        String walletAddress = "";
+        String contractAddress = "";
+        String domainAppName = "";
+
+        return new Permit2Tag(nonce, signature, payer, spender, walletAddress, contractAddress, domainAppName);
+    }
+
+
+    static EIP712Tag newEIP712Tag() {
+        String walletAddress = "0xD58382f295f5c98BAeB525FAbb7FEBcCc62bc63B";
+        String contractAddress = "0x000000000022D473030F116dDEE9F6B43aC78BA3";
+        String appName = "Permit2";
+        String version = "";
+        String signature = "";
+        return new EIP712Tag(walletAddress, contractAddress, appName, version, signature);
     }
 }

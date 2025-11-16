@@ -50,6 +50,8 @@ public class QuoteTag extends BaseTag {
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private String signature;
 
+  @Key
+  @JsonProperty
   private Integer slippageBP;
 
   public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {

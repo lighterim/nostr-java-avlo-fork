@@ -12,9 +12,9 @@ public class AccountTagSerializer extends JsonSerializer<AccountTag> {
     public void serialize(AccountTag tag, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartArray();
         jsonGenerator.writeString(tag.getCode());
-        jsonGenerator.writeString(tag.getTba());
         jsonGenerator.writeString(tag.getNftId());
         jsonGenerator.writeNumber(tag.getChainId());
+        jsonGenerator.writeString(tag.getTba());
         jsonGenerator.writeString(tag.getNostrPubKey());
         jsonGenerator.writeString(tag.getIpfsHash());
         jsonGenerator.writeEndArray();

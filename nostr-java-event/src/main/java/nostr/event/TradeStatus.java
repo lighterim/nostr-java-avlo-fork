@@ -10,7 +10,8 @@ public enum TradeStatus {
     SellerReleasedEvent("release"),
     SellerRequestCancelEvent("seller_request_cancel"),
     BuyerCancelEvent("buyer_cancel"),
-    SellerCancelEvent("seller_cancel");
+    SellerCancelEvent("seller_cancel"),
+    DropEvent("drop");
 
 
 

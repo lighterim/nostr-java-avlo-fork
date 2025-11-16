@@ -4,13 +4,31 @@ import lombok.Getter;
 
 @Getter
 public enum TradeStatus {
+    /**
+     *  enum EscrowStatus {
+     *         Escrowed,
+     *         SellerRequestCancel,
+     *         Paid,
+     *         SellerCancelled,
+     *         BuyerCancelled,
+     *         BuyerDisputed,
+     *         SellerDisputed,
+     *         Resolved,
+     *         ThresholdReachedReleased,
+     *         SellerReleased
+     *     }
+     */
     TakeEvent("take"),
     CreateEscrowEvent("escrow"),
-    BuyerPaidEvent("paid"),
-    SellerReleasedEvent("release"),
     SellerRequestCancelEvent("seller_request_cancel"),
+    BuyerPaidEvent("paid"),
+    SellerCancelEvent("seller_cancel"),
     BuyerCancelEvent("buyer_cancel"),
-    SellerCancelEvent("seller_cancel");
+    BuyerDisputedEvent("buyer_disputed"),
+    SellerDisputedEvent("seller_disputed"),
+    ResolvedEvent("resolved"),
+    ThresholdReachedEvent("threshold_reached_released"),
+    SellerReleasedEvent("release");
 
 
 

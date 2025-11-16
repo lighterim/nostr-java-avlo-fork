@@ -23,15 +23,22 @@ public class Permit2Tag extends BaseTag {
     private final String signature;
     private final String payer;
     private final String spender;
+    private final String walletAddress;
+    private final String contractAddress;
+    private final String domainAppName;
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
         final String nonce = getText(node, 1);
         final String signature = getText(node, 2);
         final String payer = getText(node, 3);
         final String spender = getText(node, 4);
+        final String walletAddress = getText(node, 5);
+        final String contractAddress = getText(node, 6);
+        final String domainAppName = getText(node, 7);
 
         Permit2Tag.Permit2TagBuilder tag = Permit2Tag.builder().nonce(nonce).payer(payer)
-                .signature(signature).spender(spender);
+                .signature(signature).spender(spender).walletAddress(walletAddress)
+                .contractAddress(contractAddress).domainAppName(domainAppName);
 
         return (T) tag.build();
     }

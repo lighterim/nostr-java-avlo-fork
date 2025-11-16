@@ -17,6 +17,9 @@ public class Permit2TagSerializer extends JsonSerializer<Permit2Tag> {
         jsonGenerator.writeString(tag.getSignature());
         jsonGenerator.writeString(tag.getPayer());
         jsonGenerator.writeString(tag.getSpender());
+        jsonGenerator.writeString(tag.getWalletAddress());
+        jsonGenerator.writeString(tag.getContractAddress());
+        jsonGenerator.writeString(tag.getDomainAppName());
         jsonGenerator.writeEndArray();
     }
 }

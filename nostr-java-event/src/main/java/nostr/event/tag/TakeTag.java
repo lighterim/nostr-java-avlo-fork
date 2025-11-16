@@ -1,5 +1,6 @@
 package nostr.event.tag;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
@@ -35,6 +36,8 @@ public class TakeTag extends BaseTag {
     /** Seller's fund source address (must support both the primary EOA and the TBA). **/
     private final String payer;
 
+    private final Integer visibleStatus;
+
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
         String side = Optional.ofNullable(node.get(1)).orElseThrow().asText().toUpperCase();
@@ -47,11 +50,14 @@ public class TakeTag extends BaseTag {
         final String sellerFeeRate = Optional.ofNullable(node.get(8)).orElseThrow().asText();
         final String buyerFeeRate = Optional.ofNullable(node.get(9)).orElseThrow().asText();
         final String payer = Optional.ofNullable(node.get(10)).orElseThrow().asText();
-
+        Integer visibleStatus = null;
+        if(Optional.ofNullable(node.get(11)).isPresent()) {
+            visibleStatus = node.get(11).asInt();
+        }
         return (T)TakeTag.builder().side(Side.valueOf(side)).intentEventId(eventId).makerNip05(makerNip05)
                 .makerPubkey(makerPubkey).volume(new BigDecimal(volumeStr).stripTrailingZeros()).takerNip05(takerNip05).takerPubkey(takerPubkey)
                 .sellerFeeRate(new BigDecimal(sellerFeeRate).stripTrailingZeros())
                 .buyerFeeRate(new BigDecimal(buyerFeeRate).stripTrailingZeros())
-                .payer(payer).build();
+                .payer(payer).visibleStatus(visibleStatus).build();
     }
 }

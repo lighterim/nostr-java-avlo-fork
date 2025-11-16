@@ -18,6 +18,7 @@ public enum TradeStatus {
      *         SellerReleased
      *     }
      */
+    DropEvent("drop"),
     TakeEvent("take"),
     CreateEscrowEvent("escrow"),
     SellerRequestCancelEvent("seller_request_cancel"),

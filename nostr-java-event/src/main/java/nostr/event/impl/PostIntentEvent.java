@@ -74,8 +74,9 @@ public class PostIntentEvent extends NIP77Event {
     @Override
     public void validate() {
         super.validate();
-        if(permit2Tag == null || sideTag == null || sideTag.getSide()==null
+        if( sideTag == null || sideTag.getSide()==null
                 || (sideTag.getIntentType() != IntentType.SIGNATURE_SELL && eip712Tag == null)  // the signature sell just only permit2Tag.
+                || (sideTag.getIntentType() != IntentType.BUYER_INTENT && permit2Tag == null) // the buyer intent just only Eip712Tag
                 || tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
                 || quoteTag == null || isBlank(quoteTag.getCurrency()) || !geZero(quoteTag.getNumber())
                 || paymentTags == null || paymentTags.isEmpty()){

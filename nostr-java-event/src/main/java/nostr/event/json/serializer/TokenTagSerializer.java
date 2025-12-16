@@ -38,7 +38,7 @@ public class TokenTagSerializer extends JsonSerializer<TokenTag> {
         jsonGenerator.writeNumber(tokenTag.getAmount().stripTrailingZeros().toPlainString());
         jsonGenerator.writeNumber(tokenTag.getChainId());
         jsonGenerator.writeString(tokenTag.getExpiryTime());
-        jsonGenerator.writeNumber(tokenTag.getTradedAmount().stripTrailingZeros());
+        jsonGenerator.writeNumber(tokenTag.getTradedAmount()==null ? null : tokenTag.getTradedAmount().stripTrailingZeros());
         jsonGenerator.writeEndArray();
     }
 }

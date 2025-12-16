@@ -20,7 +20,7 @@ public class QuoteTagSerializer extends JsonSerializer<QuoteTag> {
         jsonGenerator.writeString(t.getTimestamp() == null ? "0" : String.valueOf(t.getTimestamp()));
         jsonGenerator.writeString(t.getSignature());
         jsonGenerator.writeString(t.getUsdRate().stripTrailingZeros().toPlainString());
-        jsonGenerator.writeNumber(t.getSlippageBP());
+        jsonGenerator.writeNumber(t.getSlippageBP() == null ? 0 : t.getSlippageBP());
         jsonGenerator.writeEndArray();
     }
 

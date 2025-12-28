@@ -36,6 +36,7 @@ public class TakeIntentEvent extends NIP77Event {
     private PaymentTag paymentTag;
     @JsonIgnore
     private Permit2Tag permit2Tag;
+    @JsonIgnore
     private EscrowTag escrowTag;
     /** when taker take intent, retrieve original(maker) intent. */
     @JsonIgnore
@@ -116,6 +117,14 @@ public class TakeIntentEvent extends NIP77Event {
                         || quoteTag == null || paymentTag == null
         ) {
             throw new AssertionError("take tag incorrect.", null);
+        }
+    }
+
+    public void setEscrowTag(EscrowTag escrowTag) {
+        EscrowTag findEscrowTag = findTag(EscrowTag.class, ESCROW_TAG_CODE);
+        if(findEscrowTag==null) {
+            this.escrowTag = escrowTag;
+            this.getTags().add(escrowTag);
         }
     }
 }

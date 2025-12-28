@@ -15,6 +15,8 @@ import nostr.event.TradeStatus;
 import nostr.event.tag.*;
 
 import java.util.List;
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 import static nostr.event.NIP77Event.TAKE_INTENT_EVENT;
 
@@ -121,10 +123,18 @@ public class TakeIntentEvent extends NIP77Event {
     }
 
     public void setEscrowTag(EscrowTag escrowTag) {
+        this.escrowTag = escrowTag;
         EscrowTag findEscrowTag = findTag(EscrowTag.class, ESCROW_TAG_CODE);
         if(findEscrowTag==null) {
-            this.escrowTag = escrowTag;
             this.getTags().add(escrowTag);
+        } else {
+            OptionalInt index = IntStream.range(0, this.getTags().size())
+                    .filter(i -> ESCROW_TAG_CODE.equals(this.getTags().get(i).getCode()))
+                    .findFirst();
+
+            if (index.isPresent()) {
+                this.getTags().set(index.getAsInt(), escrowTag);
+            }
         }
     }
 }

@@ -136,4 +136,36 @@ public class TakeIntentEvent extends NIP77Event {
             }
         }
     }
+
+    public void setEip712Tag(EIP712Tag eip712Tag) {
+        this.eip712Tag = eip712Tag;
+        EIP712Tag findEIP712Tag = findTag(EIP712Tag.class, EIP712_TAG_CODE);
+        if(findEIP712Tag==null) {
+            this.getTags().add(eip712Tag);
+        } else {
+            OptionalInt index = IntStream.range(0, this.getTags().size())
+                    .filter(i -> EIP712_TAG_CODE.equals(this.getTags().get(i).getCode()))
+                    .findFirst();
+
+            if (index.isPresent()) {
+                this.getTags().set(index.getAsInt(), eip712Tag);
+            }
+        }
+    }
+
+    public void setPermit2Tag(Permit2Tag permit2Tag) {
+        this.permit2Tag = permit2Tag;
+        Permit2Tag findPermit2Tag = findTag(Permit2Tag.class, PERMIT2_TAG_CODE);
+        if(findPermit2Tag==null) {
+            this.getTags().add(permit2Tag);
+        } else {
+            OptionalInt index = IntStream.range(0, this.getTags().size())
+                    .filter(i -> PERMIT2_TAG_CODE.equals(this.getTags().get(i).getCode()))
+                    .findFirst();
+
+            if (index.isPresent()) {
+                this.getTags().set(index.getAsInt(), permit2Tag);
+            }
+        }
+    }
 }

@@ -113,8 +113,7 @@ public class TakeIntentEvent extends NIP77Event {
     public void validate() {
         super.validate();
         if (
-                eip712Tag == null || permit2Tag == null
-                        || takeTag == null || isBlank(takeTag.getIntentEventId()) || !gtZero(takeTag.getVolume())
+                        takeTag == null || isBlank(takeTag.getIntentEventId()) || !gtZero(takeTag.getVolume())
                         || tokenTag == null || limitTag == null
                         || quoteTag == null || paymentTag == null
         ) {

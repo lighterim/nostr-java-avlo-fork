@@ -25,6 +25,7 @@ public class LedgerTag extends BaseTag {
     private final String txId;
     private final String txUrl;
     private final TradeStatus tradeStatus;
+    private final String escrowHash;
 
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
@@ -34,9 +35,13 @@ public class LedgerTag extends BaseTag {
         final String txUrl = Optional.ofNullable(node.get(4)).orElseThrow().asText();
         final String tradeStatus = Optional.ofNullable(node.get(5)).orElseThrow().asText();
 
+        String escrowHash = null;
+        if(Optional.ofNullable(node.get(6)).isPresent()) {
+            escrowHash = node.get(6).asText();
+        }
         return (T) LedgerTag.builder()
                 .chain(chain).network(network).txId(txId).txUrl(txUrl).tradeStatus(TradeStatus.valueOf(tradeStatus))
-                .build();
+                .escrowHash(escrowHash).build();
     }
 
 }

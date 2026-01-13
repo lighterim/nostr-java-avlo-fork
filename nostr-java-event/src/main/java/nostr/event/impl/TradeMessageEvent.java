@@ -12,10 +12,12 @@ import nostr.event.Kind;
 import nostr.event.NIP77Event;
 import nostr.event.tag.CreatedByTag;
 import nostr.event.tag.EIP712Tag;
+import nostr.event.tag.EscrowTag;
 import nostr.event.tag.LedgerTag;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 
 @Data
@@ -30,6 +32,8 @@ public class TradeMessageEvent extends NIP77Event {
     private LedgerTag ledgerTag;
     @JsonIgnore
     private EIP712Tag eip712Tag;
+    @JsonIgnore
+    private EscrowTag escrowTag;
 
 
     public TradeMessageEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content) {
@@ -47,6 +51,9 @@ public class TradeMessageEvent extends NIP77Event {
         if (eip712Tag == null) {
             this.eip712Tag = findTag(EIP712Tag.class, EIP712_TAG_CODE);
         }
+        if (escrowTag == null) {
+            this.escrowTag = findTag(EscrowTag.class, ESCROW_TAG_CODE);
+        }
     }
 
     @Override
@@ -56,11 +63,52 @@ public class TradeMessageEvent extends NIP77Event {
     }
 
     public void setCreatedByTag(CreatedByTag createdByTag) {
-        List<BaseTag> newTags = new ArrayList<>(getTags().stream().filter(t -> !t.getCode().equals(CREATED_BY_TAG_CODE) && !(t instanceof CreatedByTag)).toList());
-        newTags.add(createdByTag);
-        this.createdByTag = createdByTag;
-        setTags(newTags);
+        CreatedByTag findTag = findTag(CreatedByTag.class, CREATED_BY_TAG_CODE);
+        if(findTag==null) {
+            this.getTags().add(createdByTag);
+        } else {
+            OptionalInt index = IntStream.range(0, this.getTags().size())
+                    .filter(i -> CREATED_BY_TAG_CODE.equals(this.getTags().get(i).getCode()))
+                    .findFirst();
+
+            if (index.isPresent()) {
+                this.getTags().set(index.getAsInt(), createdByTag);
+            }
+        }
+
     }
+
+    public void setEip712Tag(EIP712Tag eip712Tag) {
+        EIP712Tag findEIP712Tag = findTag(EIP712Tag.class, EIP712_TAG_CODE);
+        if(findEIP712Tag==null) {
+            this.getTags().add(eip712Tag);
+        } else {
+            OptionalInt index = IntStream.range(0, this.getTags().size())
+                    .filter(i -> EIP712_TAG_CODE.equals(this.getTags().get(i).getCode()))
+                    .findFirst();
+
+            if (index.isPresent()) {
+                this.getTags().set(index.getAsInt(), eip712Tag);
+            }
+        }
+    }
+
+    public void setEscrowTag(EscrowTag escrowTag) {
+        EscrowTag findTag = findTag(EscrowTag.class, ESCROW_TAG_CODE);
+        if(findTag ==null) {
+            this.getTags().add(escrowTag);
+        } else {
+            OptionalInt index = IntStream.range(0, this.getTags().size())
+                    .filter(i -> ESCROW_TAG_CODE.equals(this.getTags().get(i).getCode()))
+                    .findFirst();
+
+            if (index.isPresent()) {
+                this.getTags().set(index.getAsInt(), escrowTag);
+            }
+        }
+    }
+
+
 
     @Override
     public void validate() {

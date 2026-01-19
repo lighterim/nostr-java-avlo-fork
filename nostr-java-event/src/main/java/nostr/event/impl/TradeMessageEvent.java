@@ -63,6 +63,7 @@ public class TradeMessageEvent extends NIP77Event {
     }
 
     public void setCreatedByTag(CreatedByTag createdByTag) {
+        this.createdByTag = createdByTag;
         CreatedByTag findTag = findTag(CreatedByTag.class, CREATED_BY_TAG_CODE);
         if(findTag==null) {
             this.getTags().add(createdByTag);
@@ -75,10 +76,10 @@ public class TradeMessageEvent extends NIP77Event {
                 this.getTags().set(index.getAsInt(), createdByTag);
             }
         }
-
     }
 
     public void setEip712Tag(EIP712Tag eip712Tag) {
+        this.eip712Tag = eip712Tag;
         EIP712Tag findEIP712Tag = findTag(EIP712Tag.class, EIP712_TAG_CODE);
         if(findEIP712Tag==null) {
             this.getTags().add(eip712Tag);
@@ -94,6 +95,7 @@ public class TradeMessageEvent extends NIP77Event {
     }
 
     public void setEscrowTag(EscrowTag escrowTag) {
+        this.escrowTag = escrowTag;
         EscrowTag findTag = findTag(EscrowTag.class, ESCROW_TAG_CODE);
         if(findTag ==null) {
             this.getTags().add(escrowTag);

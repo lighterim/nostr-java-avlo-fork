@@ -24,6 +24,7 @@ import nostr.event.BaseTag;
 import nostr.event.Kind;
 import nostr.event.json.deserializer.PublicKeyDeserializer;
 import nostr.event.json.deserializer.SignatureDeserializer;
+import nostr.event.validator.EventValidator;
 import nostr.util.NostrException;
 import nostr.util.NostrUtil;
 
@@ -158,6 +159,14 @@ public class GenericEvent extends BaseEvent implements ISignable, IGenericElemen
         }
     }
 
+    public void updateSerializedEvent(){
+        try {
+            this._serializedEvent = this.serialize().getBytes(StandardCharsets.UTF_8);
+        } catch (NostrException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void update() {
 
         try {
@@ -187,7 +196,11 @@ public class GenericEvent extends BaseEvent implements ISignable, IGenericElemen
     }
 
     protected void validate() {
-
+        // Validate base fields
+        EventValidator.validateId(this.id);
+        EventValidator.validatePubKey(this.pubKey);
+        EventValidator.validateSignature(this.signature);
+        EventValidator.validateCreatedAt(this.createdAt);
     }
 
     private String serialize() throws NostrException {
@@ -201,7 +214,7 @@ public class GenericEvent extends BaseEvent implements ISignable, IGenericElemen
             arrayNode.add(this.kind);
             arrayNode.add(mapper.valueToTree(tags));
             arrayNode.add(this.content);
-
+            System.out.println("serialize str:" + mapper.writeValueAsString(arrayNode));
             return mapper.writeValueAsString(arrayNode);
         } catch (JsonProcessingException e) {
             throw new NostrException(e);

@@ -35,10 +35,10 @@ public class TokenTagSerializer extends JsonSerializer<TokenTag> {
         jsonGenerator.writeString(tokenTag.getChain());
         jsonGenerator.writeString(tokenTag.getNetwork());
         jsonGenerator.writeString(tokenTag.getAddress());
-        jsonGenerator.writeNumber(tokenTag.getAmount().stripTrailingZeros().toPlainString());
-        jsonGenerator.writeNumber(tokenTag.getChainId());
+        jsonGenerator.writeString(tokenTag.getAmount().stripTrailingZeros().toPlainString());
+        jsonGenerator.writeString(String.valueOf(tokenTag.getChainId()));
         jsonGenerator.writeString(tokenTag.getExpiryTime());
-        jsonGenerator.writeNumber(tokenTag.getTradedAmount()==null ? null : tokenTag.getTradedAmount().stripTrailingZeros());
+        jsonGenerator.writeString(tokenTag.getTradedAmount()==null ? null : tokenTag.getTradedAmount().stripTrailingZeros().toPlainString());
         jsonGenerator.writeEndArray();
     }
 }

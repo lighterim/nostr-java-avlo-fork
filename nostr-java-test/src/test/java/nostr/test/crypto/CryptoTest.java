@@ -1,14 +1,29 @@
 package nostr.test.crypto;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import nostr.base.PrivateKey;
+import nostr.base.PublicKey;
+import nostr.base.Signature;
 import nostr.crypto.bech32.Bech32;
 import nostr.crypto.bech32.Bech32Prefix;
 import nostr.crypto.schnorr.Schnorr;
+import nostr.event.BaseTag;
 import nostr.event.impl.GenericEvent;
+import nostr.event.impl.PostIntentEvent;
+import nostr.event.impl.TakeIntentEvent;
 import nostr.id.Identity;
 import nostr.util.NostrException;
 import nostr.util.NostrUtil;
+import org.bouncycastle.util.encoders.Hex;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 import static nostr.test.EntityFactory.Events.createTextNoteEvent;
 import static org.junit.jupiter.api.Assertions.assertFalse;

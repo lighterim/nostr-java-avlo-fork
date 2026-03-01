@@ -16,6 +16,12 @@ public class MakeTagSerializer extends JsonSerializer<MakeTag> {
         jsonGenerator.writeString(makeTag.getMakerNip05());
         jsonGenerator.writeString(makeTag.getMakerPubkey());
         jsonGenerator.writeString(makeTag.getIntentType().getDesc());
+        jsonGenerator.writeString(makeTag.getClientId());
+        jsonGenerator.writeString(makeTag.getFeeRate()==null ? null : makeTag.getFeeRate().toString());
+        jsonGenerator.writeString(makeTag.getTotalTransAmount()==null ? null : makeTag.getTotalTransAmount().stripTrailingZeros().toPlainString());
+        jsonGenerator.writeString(makeTag.getOrderCompletionRate()==null ? null : makeTag.getOrderCompletionRate().toString());
+        jsonGenerator.writeString(makeTag.getKycAddress()==null ? null : makeTag.getKycAddress());
+        jsonGenerator.writeString(makeTag.getKycResult()==null ? null : makeTag.getKycResult());
         jsonGenerator.writeEndArray();
     }
 }

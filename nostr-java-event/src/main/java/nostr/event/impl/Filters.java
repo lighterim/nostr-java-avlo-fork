@@ -57,6 +57,26 @@ public class Filters {
     private List<PublicKey> referencePubKeys;
 
     @Key
+    @JsonProperty("#chainId")
+    private List<Integer> chainId;
+
+    @Key
+    @JsonProperty("#symbol")
+    private List<String> symbol;
+
+    @Key
+    @JsonProperty("#pm")
+    private List<String> paymentMethod;
+
+    @Key
+    @JsonProperty("#currency")
+    private List<String> currency;
+
+    @Key
+    @JsonProperty("#side")
+    private List<String> side;
+
+    @Key
     private Long since;
 
     @Key

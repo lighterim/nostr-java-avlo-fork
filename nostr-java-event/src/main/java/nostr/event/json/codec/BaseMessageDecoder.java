@@ -8,14 +8,7 @@ import lombok.SneakyThrows;
 import nostr.base.IDecoder;
 import nostr.event.BaseMessage;
 import nostr.event.impl.GenericMessage;
-import nostr.event.message.CanonicalAuthenticationMessage;
-import nostr.event.message.CloseMessage;
-import nostr.event.message.EoseMessage;
-import nostr.event.message.EventMessage;
-import nostr.event.message.NoticeMessage;
-import nostr.event.message.OkMessage;
-import nostr.event.message.RelayAuthenticationMessage;
-import nostr.event.message.ReqMessage;
+import nostr.event.message.*;
 
 import java.util.Map;
 
@@ -35,7 +28,7 @@ public class BaseMessageDecoder<T extends BaseMessage> implements IDecoder<T> {
     public T decode(@NonNull String jsonString) {
         Object[] msgArr = mapper.readValue(jsonString, Object[].class);
         final String strCmd = msgArr[0].toString();
-        final Object arg = msgArr[1];
+        final Object arg = msgArr.length>1?msgArr[1]:null; //[PING]
 
         return switch (strCmd) {
             case "AUTH" -> arg instanceof Map map ?
@@ -47,6 +40,8 @@ public class BaseMessageDecoder<T extends BaseMessage> implements IDecoder<T> {
             case "NOTICE" -> NoticeMessage.decode(arg);
             case "OK" -> OkMessage.decode(msgArr);
             case "REQ" -> ReqMessage.decode(msgArr, mapper);
+            case "PING" -> PingMessage.decode(arg);
+            case "PONG" -> PongMessage.decode(arg);
             default -> GenericMessage.decode(msgArr);
         };
     }

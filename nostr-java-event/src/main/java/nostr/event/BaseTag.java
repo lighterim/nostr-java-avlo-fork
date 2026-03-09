@@ -1,6 +1,7 @@
 package nostr.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
@@ -21,6 +22,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -72,5 +74,9 @@ public abstract class BaseTag implements ITag {
         }
 
         return fieldList;
+    }
+
+    protected static String getText(JsonNode node, int index) {
+        return Optional.ofNullable(node.get(index)).orElseThrow().asText();
     }
 }

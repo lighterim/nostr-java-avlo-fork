@@ -34,7 +34,7 @@ public class PostIntentEvent extends NIP77Event {
     @JsonIgnore
     private LimitTag limitTag;
     @JsonIgnore
-    private List<PaymentTag> paymentTags;
+    private PaymentTag paymentTag;
 
     public PostIntentEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content){
         super(pubKey, Kind.POST_INTENT, tags, content);
@@ -60,8 +60,8 @@ public class PostIntentEvent extends NIP77Event {
         if(limitTag == null) {
             this.limitTag = findTag(LimitTag.class, LIMIT_TAG_CODE);
         }
-        if(paymentTags == null){
-            this.paymentTags = findTags(PaymentTag.class, PAYMENT_TAG_CODE);
+        if(paymentTag == null){
+            this.paymentTag = findTag(PaymentTag.class, PAYMENT_TAG_CODE);
         }
     }
 
@@ -79,7 +79,7 @@ public class PostIntentEvent extends NIP77Event {
                 || (sideTag.getIntentType() != IntentType.BUYER_INTENT && permit2Tag == null) // the buyer intent just only Eip712Tag
                 || tokenTag == null || isBlank(tokenTag.getSymbol()) || isBlank(tokenTag.getChain()) || isBlank(tokenTag.getNetwork()) || isBlank(tokenTag.getAddress())
                 || quoteTag == null || isBlank(quoteTag.getCurrency()) || !geZero(quoteTag.getNumber())
-                || paymentTags == null || paymentTags.isEmpty()){
+                || paymentTag == null ){
             throw new AssertionError("permit2Tag, eip712Tag, tokenTag, sideTag, quoteTag, payment must not be empty!");
         }
     }

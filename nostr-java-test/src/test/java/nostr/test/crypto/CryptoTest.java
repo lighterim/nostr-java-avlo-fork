@@ -1,7 +1,7 @@
 package nostr.test.crypto;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+//import com.google.gson.Gson;
+//import com.google.gson.reflect.TypeToken;
 import nostr.base.PrivateKey;
 import nostr.base.PublicKey;
 import nostr.base.Signature;

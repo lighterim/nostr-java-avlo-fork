@@ -42,8 +42,4 @@ public class Permit2Tag extends BaseTag {
 
         return (T) tag.build();
     }
-
-    private static String getText(JsonNode node, int index) {
-        return Optional.ofNullable(node.get(index)).orElseThrow().asText();
-    }
 }

@@ -10,7 +10,8 @@ module nostr.event {
     requires java.logging;
     requires java.desktop;
     requires openbeans;
-    
+    requires org.apache.commons.lang3;
+
     exports nostr.event;
     exports nostr.event.impl;
     exports nostr.event.message;

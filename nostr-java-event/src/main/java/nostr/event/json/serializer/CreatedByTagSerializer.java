@@ -16,7 +16,7 @@ public class CreatedByTagSerializer extends JsonSerializer<CreatedByTag> {
         gen.writeString(t.getTakeIntentEventId());
         gen.writeString(t.getNip05());
         gen.writeString(t.getPubkey());
-        gen.writeNumber(t.getTradeId());
+        gen.writeString(String.valueOf(t.getTradeId()));
         gen.writeEndArray();
     }
 }

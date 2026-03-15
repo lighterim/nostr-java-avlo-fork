@@ -13,7 +13,7 @@ public class AccountTagSerializer extends JsonSerializer<AccountTag> {
         jsonGenerator.writeStartArray();
         jsonGenerator.writeString(tag.getCode());
         jsonGenerator.writeString(tag.getNftId());
-        jsonGenerator.writeNumber(tag.getChainId());
+        jsonGenerator.writeString(String.valueOf(tag.getChainId()));
         jsonGenerator.writeString(tag.getTba());
         jsonGenerator.writeString(tag.getNostrPubKey());
         jsonGenerator.writeString(tag.getIpfsHash());

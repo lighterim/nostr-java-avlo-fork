@@ -37,19 +37,15 @@ public class NIP77Impl {
     public static class TakeIntentEventFactory extends EventFactory<TakeIntentEvent>{
 
         private final Kind kind;
-        private final long tradeId;
-        private final TradeStatus tradeStatus;
 
-        public TakeIntentEventFactory(Long tradeId, Identity sender, List<BaseTag> tags, TradeStatus tradeStatus, String content){
+        public TakeIntentEventFactory(Identity sender, List<BaseTag> tags, String content){
             super(sender, tags, content);
             this.kind = Kind.TAKE_INTENT;
-            this.tradeId = tradeId;
-            this.tradeStatus = tradeStatus;
         }
 
         @Override
         public TakeIntentEvent create(){
-            return new TakeIntentEvent(tradeId, getSender(), getTags(), getContent(), tradeStatus);
+            return new TakeIntentEvent(getSender(), getTags(), getContent());
         }
     }
 

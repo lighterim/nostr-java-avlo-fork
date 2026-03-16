@@ -45,28 +45,16 @@ public class TakeIntentEvent extends NIP77Event {
     private LimitTag limitTag;
     @JsonIgnore
     private TradeKeyTag tradeKeyTag;
+    @JsonIgnore
+    private TradeTag tradeTag;
 
-    @JsonProperty("trade_id")
-    private long tradeId;
-
-    @JsonProperty("status")
-    private String tradeStatus;
-
-    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content, TradeStatus tradeStatus) {
+    public TakeIntentEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content) {
         super(pubKey, Kind.TAKE_INTENT, tags, content);
-        this.tradeId = tradeId;
-        if(tradeStatus!=null) {
-            this.tradeStatus = tradeStatus.getValue();
-        }
         initTags();
     }
 
-    public TakeIntentEvent(@NonNull Long tradeId, @NonNull PublicKey pubKey, @NonNull Integer nip, @NonNull List<BaseTag> tags, @NonNull String eventIdString, @NonNull String content, TradeStatus tradeStatus, long createdAt) {
+    public TakeIntentEvent(@NonNull PublicKey pubKey, @NonNull Integer nip, @NonNull List<BaseTag> tags, @NonNull String eventIdString, @NonNull String content, long createdAt) {
         super(pubKey, Kind.TAKE_INTENT, tags, content);
-        this.tradeId = tradeId;
-        if(tradeStatus!=null) {
-            this.tradeStatus = tradeStatus.getValue();
-        }
         this.setNip(nip);
         this.setId(eventIdString);
         this.setCreatedAt(createdAt);
@@ -100,6 +88,9 @@ public class TakeIntentEvent extends NIP77Event {
         }
         if (escrowTag == null){
             escrowTag = findTag(EscrowTag.class, ESCROW_TAG_CODE);
+        }
+        if(tradeTag == null){
+            tradeTag = findTag(TradeTag.class, TRADE_TAG_CODE);
         }
     }
 

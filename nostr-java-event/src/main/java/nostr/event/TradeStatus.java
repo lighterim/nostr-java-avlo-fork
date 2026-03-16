@@ -48,6 +48,11 @@ public enum TradeStatus {
             case "seller_request_cancel" -> SellerRequestCancelEvent;
             case "buyer_cancel" -> BuyerCancelEvent;
             case "seller_cancel" -> SellerCancelEvent;
+            case "buyer_disputed" -> BuyerDisputedEvent;
+            case "seller_disputed" -> SellerDisputedEvent;
+            case "resolved" -> ResolvedEvent;
+            case "threshold_reached_released" -> ThresholdReachedEvent;
+            case "drop" -> DropEvent;
             default -> throw new IllegalArgumentException("value="+value);
         };
     }

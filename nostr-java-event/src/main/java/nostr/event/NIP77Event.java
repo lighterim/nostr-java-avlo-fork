@@ -22,6 +22,7 @@ public class NIP77Event extends GenericEvent {
     public static final String LIMIT_TAG_CODE = "limit";
     public static final String MAKE_TAG_CODE = "make";
     public static final String CREATED_BY_TAG_CODE = "created_by";
+    public static final String TLSN_PROOF_TAG_CODE = "tlsn_proof";
     public static final String LEDGER_TAG_CODE = "ledger";
     public static final String TRADE_KEY_TAG_CODE = "keys";
     public static final String POST_INTENT_EVENT = "post_intent";

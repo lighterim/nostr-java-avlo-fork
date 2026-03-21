@@ -10,10 +10,7 @@ import nostr.base.annotation.Event;
 import nostr.event.BaseTag;
 import nostr.event.Kind;
 import nostr.event.NIP77Event;
-import nostr.event.tag.CreatedByTag;
-import nostr.event.tag.EIP712Tag;
-import nostr.event.tag.EscrowTag;
-import nostr.event.tag.LedgerTag;
+import nostr.event.tag.*;
 
 import java.util.List;
 import java.util.OptionalInt;
@@ -34,6 +31,8 @@ public class TradeMessageEvent extends NIP77Event {
     private EIP712Tag eip712Tag;
     @JsonIgnore
     private EscrowTag escrowTag;
+    @JsonIgnore
+    private TlsnProofTag tlsnProofTag;
 
 
     public TradeMessageEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content) {
@@ -53,6 +52,9 @@ public class TradeMessageEvent extends NIP77Event {
         }
         if (escrowTag == null) {
             this.escrowTag = findTag(EscrowTag.class, ESCROW_TAG_CODE);
+        }
+        if (tlsnProofTag == null) {
+            this.tlsnProofTag = findTag(TlsnProofTag.class, TLSN_PROOF_TAG_CODE);
         }
     }
 
@@ -110,7 +112,20 @@ public class TradeMessageEvent extends NIP77Event {
         }
     }
 
-
+    public void setTlsnProofTag(TlsnProofTag tlsnProofTag) {
+        this.tlsnProofTag = tlsnProofTag;
+        TlsnProofTag  findTag = findTag(TlsnProofTag.class, TLSN_PROOF_TAG_CODE);
+        if(findTag==null) {
+            this.getTags().add(tlsnProofTag);
+        } else {
+            OptionalInt index = IntStream.range(0, this.getTags().size())
+                    .filter( i-> TLSN_PROOF_TAG_CODE.equals(this.getTags().get(i).getCode()))
+                    .findFirst();
+            if (index.isPresent()) {
+                this.getTags().set(index.getAsInt(), tlsnProofTag);
+            }
+        }
+    }
 
     @Override
     public void validate() {

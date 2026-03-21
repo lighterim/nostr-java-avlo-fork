@@ -77,6 +77,10 @@ public class Filters {
     private List<String> side;
 
     @Key
+    @JsonProperty("#createdBy")
+    private List<String> createdBy;
+
+    @Key
     private Long since;
 
     @Key

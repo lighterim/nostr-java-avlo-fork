@@ -15,12 +15,9 @@ public class TlsnProofTagSerializer extends JsonSerializer<TlsnProofTag> {
         g.writeString(t.getCode());
         g.writeString(t.getPaymentMethod());
         g.writeString(t.getPaymentId());
-        g.writeString(t.getAccount1());
-        g.writeString(t.getAccount2());
-        g.writeString(t.getAccount3());
+        g.writeString(t.getPayeeDetails());
         g.writeString(t.getAmount());
         g.writeString(t.getCurrency());
-        g.writeString(t.getState());
         g.writeString(t.getConfirmationTs());
         g.writeString(t.getTradeId());
         g.writeString(t.getSignature());

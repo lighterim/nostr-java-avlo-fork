@@ -15,6 +15,7 @@ public class ArbitrationTagSerializer extends JsonSerializer<ArbitrationTag> {
         g.writeString(t.getCode());
         g.writeString(t.getArbitrator());
         g.writeNumber(t.getBuyerThresholdBp());
+        g.writeNumber(t.getNo());
         g.writeString(t.getSignature());
         g.writeEndArray();
     }

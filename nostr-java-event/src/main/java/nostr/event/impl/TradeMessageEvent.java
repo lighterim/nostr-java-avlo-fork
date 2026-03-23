@@ -33,6 +33,8 @@ public class TradeMessageEvent extends NIP77Event {
     private EscrowTag escrowTag;
     @JsonIgnore
     private TlsnProofTag tlsnProofTag;
+    @JsonIgnore
+    private ArbitrationTag arbitrationTag;
 
 
     public TradeMessageEvent(@NonNull PublicKey pubKey, @NonNull List<BaseTag> tags, @NonNull String content) {
@@ -55,6 +57,9 @@ public class TradeMessageEvent extends NIP77Event {
         }
         if (tlsnProofTag == null) {
             this.tlsnProofTag = findTag(TlsnProofTag.class, TLSN_PROOF_TAG_CODE);
+        }
+        if(arbitrationTag == null) {
+            this.arbitrationTag = findTag(ArbitrationTag.class, ARBITRATION_TAG_CODE);
         }
     }
 
@@ -123,6 +128,21 @@ public class TradeMessageEvent extends NIP77Event {
                     .findFirst();
             if (index.isPresent()) {
                 this.getTags().set(index.getAsInt(), tlsnProofTag);
+            }
+        }
+    }
+
+    public void setArbitrationTag(ArbitrationTag tag) {
+        this.arbitrationTag = tag;
+        ArbitrationTag  findTag = findTag(ArbitrationTag.class, ARBITRATION_TAG_CODE);
+        if(findTag==null) {
+            this.getTags().add(tag);
+        } else {
+            OptionalInt index = IntStream.range(0, this.getTags().size())
+                    .filter( i-> ARBITRATION_TAG_CODE.equals(this.getTags().get(i).getCode()))
+                    .findFirst();
+            if (index.isPresent()) {
+                this.getTags().set(index.getAsInt(), tag);
             }
         }
     }

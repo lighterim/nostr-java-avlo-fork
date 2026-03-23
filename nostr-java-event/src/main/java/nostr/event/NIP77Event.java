@@ -32,6 +32,7 @@ public class NIP77Event extends GenericEvent {
     public static final String TRADE_MESSAGE_EVENT = "trade_message";
     public static final String ESCROW_TAG_CODE = "escrow";
     public static final String TRADE_TAG_CODE = "trade";
+    public static final String ARBITRATION_TAG_CODE = "arbitration";
 
 
     public NIP77Event(){

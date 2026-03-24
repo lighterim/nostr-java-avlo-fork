@@ -44,6 +44,8 @@ public class TagDeserializer<T extends BaseTag> extends JsonDeserializer<T> {
                 case NIP77Event.LIMIT_TAG_CODE -> LimitTag.deserialize(node);
                 case NIP77Event.ESCROW_TAG_CODE -> EscrowTag.deserialize(node);
                 case NIP77Event.CREATED_BY_TAG_CODE -> CreatedByTag.deserialize(node);
+                case NIP77Event.ARBITRATION_TAG_CODE ->  ArbitrationTag.deserialize(node);
+                case NIP77Event.TLSN_PROOF_TAG_CODE -> TlsnProofTag.deserialize(node);
                 case NIP77Event.LEDGER_TAG_CODE -> LedgerTag.deserialize(node);
                 case NIP77Event.TRADE_KEY_TAG_CODE -> TradeKeyTag.deserialize(node);
                 case NIP77Event.PERMIT2_TAG_CODE -> Permit2Tag.deserialize(node);

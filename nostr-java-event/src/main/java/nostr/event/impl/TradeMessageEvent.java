@@ -150,10 +150,11 @@ public class TradeMessageEvent extends NIP77Event {
     @Override
     public void validate() {
         super.validate();
+        // 系统发出时，必须有 tradeId. 同时有 ledgerTag, tlsnPoofTag, arbitrationTag之一。
         if (createdByTag == null || isBlank(createdByTag.getNip05()) || isBlank(createdByTag.getPubkey())
-                || (ledgerTag == null && isBlank(createdByTag.getTakeIntentEventId()))
-                || (ledgerTag != null && createdByTag.getTradeId() <= 0)) {
-            throw new AssertionError(String.format("createdByTag is invalid.%s", createdByTag));
+                || (isBlank(createdByTag.getTakeIntentEventId()) && ledgerTag == null &&  tlsnProofTag == null && arbitrationTag == null)
+                || (createdByTag.getTradeId() <= 0) && (ledgerTag!=null || tlsnProofTag!=null || arbitrationTag!=null)) {
+            throw new AssertionError(String.format("createdByTag is invalid.%s, %s", createdByTag, this));
         }
     }
 }

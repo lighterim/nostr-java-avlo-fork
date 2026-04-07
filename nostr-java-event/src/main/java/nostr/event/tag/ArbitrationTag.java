@@ -24,17 +24,19 @@ public class ArbitrationTag extends BaseTag {
 
    private String arbitrator;
    private Integer buyerThresholdBp;
-   private Integer no;
+   private String resolutionTs;
+   private Integer nonce;
    private String signature;
 
     public static <T extends BaseTag> T deserialize(@NonNull JsonNode node) {
         String arbitrator = Optional.ofNullable(node.get(1)).orElseThrow().asText();
         Integer buyerThresholdBp = Optional.ofNullable(node.get(2)).orElseThrow().asInt();
-        Integer no = Optional.ofNullable(node.get(3)).orElseThrow().asInt();
-        String signature = Optional.ofNullable(node.get(4)).isPresent() ? node.get(4).asText() : null;
+        Integer nonce = Optional.ofNullable(node.get(3)).orElseThrow().asInt();
+        String resolutionTs = Optional.ofNullable(node.get(4)).orElseThrow().asText();
+        String signature = Optional.ofNullable(node.get(5)).isPresent() ? node.get(5).asText() : null;
 
         return (T) ArbitrationTag.builder()
-                .arbitrator(arbitrator).no(no).buyerThresholdBp(buyerThresholdBp).signature(signature)
+                .arbitrator(arbitrator).nonce(nonce).resolutionTs(resolutionTs).buyerThresholdBp(buyerThresholdBp).signature(signature)
                 .build();
     }
 }
